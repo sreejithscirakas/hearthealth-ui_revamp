@@ -1,0 +1,113 @@
+import React, { useState } from 'react';
+import { useTheme, Theme } from '@mui/material/styles';
+import {
+  Box,
+  CssBaseline,
+} from '@mui/material';
+import type { SelectChangeEvent } from '@mui/material/Select';
+
+import Sidemenu from './components/Sidemenu';
+import Header from './components/Header';
+import CustomToolbar from './components/CustomToolbar';
+import AppointmentDrawer from './components/AppointmentDrawer';
+import MiniCalendar from './components/MiniCalendar';
+import WeekCalendar from './components/WeekCalendar';
+import ClinicianList from './components/ClinicianList';
+
+const styles = {
+  container: {
+    display: 'flex',
+    margin: 0,
+    overflowX: 'hidden',
+  },
+  main: (theme: Theme) => ({
+    flexGrow: 1,
+    p: '0 0px',
+    margin: 0,
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  }),
+  sidebar: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0px',
+    width: '340px',
+    overflow: 'hidden',
+    flexShrink: 0,
+    scrollbarGutter: 'stable',
+    height: 'calc(-125px + 100vh)',
+  },
+  clinicianList: {
+    padding: '0px 25px',
+  },
+  calendarContainer: {
+    flex: '1 1 0%',
+    width: '100%',
+    height: 'calc(-125px + 100vh)',
+  },
+};
+
+export default function Layout() {
+  const theme = useTheme();
+  const [open, setOpen] = useState(false);
+  const [week, setWeek] = React.useState('');
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+
+  const [events] = useState([
+    {
+      title: 'Board meeting',
+      start: new Date(2025, 3, 5, 10, 0),
+      end: new Date(2025, 3, 5, 12, 0),
+    },
+    {
+      title: 'Team lunch',
+      start: new Date(2025, 3, 6, 12, 0),
+      end: new Date(2025, 3, 6, 13, 0),
+    },
+  ]);
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setWeek(event.target.value);
+  };
+
+  const toggleDrawer = (open: boolean) => () => {
+    setDrawerOpen(open);
+  };
+
+  return (
+    <Box sx={styles.container}>
+      <CssBaseline />
+      <Sidemenu open={open} setOpen={setOpen} />
+      <Box component="main" sx={styles.main(theme)}>
+        <Header />
+        <CustomToolbar 
+          week={week}
+          handleChange={handleChange}
+          toggleDrawer={toggleDrawer}
+        />
+        
+        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+          <Box sx={styles.sidebar}>
+            <Box sx={{height:'336px'}}>
+              <MiniCalendar />
+            </Box>
+            <Box sx={styles.clinicianList}>
+              <ClinicianList />
+            </Box>
+          </Box>
+          <Box sx={styles.calendarContainer}>
+            <WeekCalendar events={events} />
+          </Box>
+        </Box>
+      </Box>
+
+      <AppointmentDrawer
+        open={drawerOpen}
+        onClose={toggleDrawer(false)}
+        onOpen={toggleDrawer(true)}
+      />
+    </Box>
+  );
+}

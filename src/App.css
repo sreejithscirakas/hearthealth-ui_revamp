@@ -1,0 +1,30 @@
+/* Layout.module.css */
+.container {
+    display: flex;
+    margin: 0;
+    overflow-x: hidden;
+  }
+  
+  .main {
+    flex-grow: 1;
+    padding: 0 0px;
+    margin: 0;
+    transition: margin 0.3s ease; /* Adjust the timing as needed */
+  }
+  
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    width: 340px;
+    overflow: hidden auto;
+    flex-shrink: 0;
+    height: calc(-150px + 100vh);
+  }
+  
+  .calendar {
+    flex: 1 1 0%;
+    width: 100%;
+    overflow: hidden;
+    height: calc(-150px + 100vh);
+  }
