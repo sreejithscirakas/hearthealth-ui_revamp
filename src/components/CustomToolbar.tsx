@@ -80,7 +80,7 @@ export default function CustomToolbar({ week, handleChange, toggleDrawer }: Cust
         <Button variant="contained" size="medium" startIcon={<AddIcon />}>
           New
         </Button>
-        <IconButton size="medium">
+        <IconButton size="medium" onClick={() => window.dispatchEvent(new CustomEvent('toggleFilterDrawer'))}>
           <FilterAlt />
         </IconButton>
         <IconButton size="medium" aria-label="more">

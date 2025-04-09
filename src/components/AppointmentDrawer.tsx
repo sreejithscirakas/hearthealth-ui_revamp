@@ -59,9 +59,11 @@ export default function AppointmentDrawer({ open, onClose, onOpen }: Appointment
         sx={{ width: 590 }}
         role="presentation"
       >
-        <IconButton onClick={onClose} sx={{ margin: 1, position: 'relative' }}>
-          <CloseIcon />
-        </IconButton>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 16px', borderBottom: '1px solid #eee' }}>
+          <IconButton onClick={onClose}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
         <Stack spacing={2} sx={{ padding: 2 }}>
           <Stack direction="row" spacing={2} alignItems="center">
             <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
@@ -156,22 +158,16 @@ export default function AppointmentDrawer({ open, onClose, onOpen }: Appointment
         </Stack>
       </Box>
 
-
-      <Box  sx={{padding:'10px 20px'}}>
+      <Box sx={{padding:'10px 20px'}}>
       <Typography variant="body1" sx={{ display: 'flex', alignItems: 'center', marginBottom: 0 }}>
       Questions / Story
       </Typography>
-      <Box  sx={{padding:'10px 20px',border:'solid 1px #ddd',borderRadius:'2px'}}>
+      <Box sx={{padding:'10px 20px',border:'solid 1px #ddd',borderRadius:'2px'}}>
         <Typography variant="caption">
         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
         </Typography>
       </Box>
       </Box>
-      
- 
-       
-
-
       </Box>
     </SwipeableDrawer>
   );
