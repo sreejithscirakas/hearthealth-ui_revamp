@@ -16,6 +16,8 @@ import {
   FilterAlt,
   Settings,
 } from '@mui/icons-material';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
 import type { SelectChangeEvent } from '@mui/material/Select';
 
 interface CustomToolbarProps {
@@ -26,6 +28,10 @@ interface CustomToolbarProps {
 
 export default function CustomToolbar({ week, handleChange, toggleDrawer }: CustomToolbarProps) {
   const theme = useTheme();
+
+  const handleClick = () => {
+    console.info('You clicked the Chip.');
+  };
 
   return (
     <Box className="CustomToolbar" sx={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '20px' }}>
@@ -73,7 +79,7 @@ export default function CustomToolbar({ week, handleChange, toggleDrawer }: Cust
         </FormControl>
       </Box>
 
-      <Box display="flex" alignItems="center" sx={{ gap: '20px' }}>
+      {/*<Box display="flex" alignItems="center" sx={{ gap: '20px' }}>
         <Button onClick={toggleDrawer(true)} variant="outlined" size="medium" startIcon={<LinkRounded />}>
           Booking
         </Button>
@@ -86,6 +92,17 @@ export default function CustomToolbar({ week, handleChange, toggleDrawer }: Cust
         <IconButton size="medium" aria-label="more">
           <Settings />
         </IconButton>
+      </Box>*/}
+      <Box display="flex" alignItems="center" sx={{gap:'20px',paddingRight:'15px'}}>
+        <Typography>Filter by:</Typography>
+        <Stack spacing={1} sx={{ alignItems: 'center' }}>
+          <Stack direction="row" spacing={1}>
+            <Chip label="Pending Patient Confirmation" color="info" variant="outlined" onClick={handleClick}/>
+            <Chip label="Pending" color="warning" variant="outlined" onClick={handleClick}/>
+            <Chip label="Confirmed" color="success" variant="outlined" onClick={handleClick}/>
+            <Chip label="Cancelled" color="error" variant="outlined" onClick={handleClick}/>
+          </Stack>
+        </Stack>
       </Box>
     </Box>
   );

@@ -38,7 +38,7 @@ const ClinicianList = () => {
             <AddIcon />
         </Fab>
       </Typography>
-      <List dense sx={{ width: '100%', height: 'calc(100vh - 528px)', overflowY: 'auto', bgcolor: 'background.paper' }}>
+      <List dense sx={{ width: '100%', height: 'calc(100vh - 505px)', overflowY: 'auto', bgcolor: 'background.paper' }}>
         {doctors.map((doctor) => {
           const labelId = `clinician-list-label-${doctor.id}`;
           return (

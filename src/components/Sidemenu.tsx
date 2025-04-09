@@ -64,7 +64,7 @@ export default function Sidemenu({ open, setOpen }: SidemenuProps) {
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <img src={precisionHeartIcon} alt="Logo" style={{ height: '40px', marginRight: '8px' }} />
             <Typography className="logo-txt" variant="h6" noWrap
-            sx={{ display: open ? 'block' : 'none', color:'primary.main' }}
+            sx={{ display: open ? 'block' : 'none', color:'primary.main',fontWeight:600 }}
             >
             Precision-Heart
             </Typography>

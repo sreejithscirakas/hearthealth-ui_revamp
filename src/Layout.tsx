@@ -37,7 +37,7 @@ const styles = {
     overflow: 'hidden',
     flexShrink: 0,
     scrollbarGutter: 'stable',
-    height: 'calc(-125px + 100vh)',
+    height: 'calc(-113px + 100vh)',
   },
   clinicianList: {
     padding: '0px 25px',
@@ -45,7 +45,7 @@ const styles = {
   calendarContainer: {
     flex: '1 1 0%',
     width: '100%',
-    height: 'calc(-125px + 100vh)',
+    height: 'calc(-113px + 100vh)',
   },
 };
 
