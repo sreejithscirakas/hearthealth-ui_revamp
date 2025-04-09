@@ -3,10 +3,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add'; 
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import IconButton from '@mui/material/IconButton';
 
 const doctors = [
   {
@@ -35,11 +38,19 @@ const ClinicianList = () => {
             <AddIcon />
         </Fab>
       </Typography>
-      <List dense sx={{ width: '100%',height: 'calc(100vh - 528px)', overflowY:'auto', bgcolor: 'background.paper' }}>
+      <List dense sx={{ width: '100%', height: 'calc(100vh - 528px)', overflowY: 'auto', bgcolor: 'background.paper' }}>
         {doctors.map((doctor) => {
           const labelId = `clinician-list-label-${doctor.id}`;
           return (
-            <ListItem key={doctor.id} disablePadding>
+            <ListItem 
+              key={doctor.id} 
+              disablePadding
+              secondaryAction={
+                <IconButton edge="end" aria-label="edit" size="small">
+                  <EditIcon fontSize="small" />
+                </IconButton>
+              }
+            >
               <ListItemButton>
                 <ListItemAvatar>
                   <Avatar
