@@ -1,4 +1,4 @@
-import { styled, useTheme } from '@mui/material/styles';
+import { styled, useTheme, Theme } from '@mui/material/styles';
 import {
   Box,
   Drawer as MuiDrawer,
@@ -8,14 +8,19 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Typography
+  Typography,
+  BottomNavigation,
+  BottomNavigationAction,
+  useMediaQuery,
+  Paper,
+  Fab
 } from '@mui/material';
-import { ChevronLeft, ChevronRight } from '@mui/icons-material';
+import { ChevronLeft, ChevronRight, Add as AddIcon } from '@mui/icons-material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
 import PaymentIcon from '@mui/icons-material/Payment';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import precisionHeartIcon from "../assets/favicon.png";
+import { useState } from 'react';
 
 const drawerWidth = 240;
 
@@ -49,25 +54,103 @@ interface SidemenuProps {
 }
 
 const menuItems = [
-  { text: 'Calendar', icon: <CalendarTodayIcon />, active: true },
-  { text: 'Signup Requests', icon: <ContactPageIcon />, active: false },
-  { text: 'Billing', icon: <PaymentIcon />, active: false },
-  { text: 'Profile', icon: <AccountCircleIcon />, active: false },
+  { text: 'Calendar', mobileText: 'Calendar', icon: <CalendarTodayIcon /> },
+  { text: 'Signup Requests', mobileText: 'Requests', icon: <ContactPageIcon /> },
+  { text: 'Billing', mobileText: 'Billing', icon: <PaymentIcon /> },
+  { text: 'Profile', mobileText: 'Profile', icon: <AccountCircleIcon /> },
 ];
 
 export default function Sidemenu({ open, setOpen }: SidemenuProps) {
   const theme = useTheme();
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  if (isMobile) {
+    return (
+      <>
+        <Fab 
+          color="primary"
+          aria-label="add"
+          sx={{
+            position: 'fixed',
+            bottom: 30,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 1100,
+            width:'50px',
+            height:'50px'
+          }}
+        >
+          <AddIcon />
+        </Fab>
+        <Paper 
+          sx={{ 
+            position: 'fixed', 
+            bottom: 0, 
+            left: 0, 
+            right: 0,
+            zIndex: 1000,
+            borderTop: '1px solid rgba(0, 0, 0, 0.12)'
+          }} 
+          elevation={3}
+        >
+          <BottomNavigation
+            value={activeIndex}
+            onChange={(event, newValue) => {
+              setActiveIndex(newValue);
+            }}
+            sx={{
+              '& .Mui-selected': {
+                color: theme.palette.primary.main,
+              },
+              '& .MuiBottomNavigationAction-label': {
+                fontSize: '0.75rem !important',
+                transition: 'none !important',
+                lineHeight: '1.2 !important',
+                fontWeight: '400 !important',
+                opacity: '1 !important',
+              },
+              '& .Mui-selected .MuiBottomNavigationAction-label': {
+                fontSize: '0.75rem !important',
+                opacity: '1 !important',
+              },
+            }}
+          >
+            {menuItems.map((item, index) => (
+              <BottomNavigationAction
+                key={item.text}
+                label={item.mobileText}
+                icon={item.icon}
+                sx={{
+                  minWidth: 'auto',
+                  padding: '6px 12px',
+                  '& .MuiBottomNavigationAction-label': {
+                    opacity: 1,
+                  },
+                }}
+              />
+            ))}
+          </BottomNavigation>
+        </Paper>
+      </>
+    );
+  }
 
   return (
     <Drawer variant="permanent" open={open}>
       <DrawerHeader>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <img src={precisionHeartIcon} alt="Logo" style={{ height: '40px', marginRight: '8px' }} />
-            <Typography className="logo-txt" variant="h6" noWrap
-            sx={{ display: open ? 'block' : 'none', color:'primary.main',fontWeight:600 }}
-            >
+          <Typography 
+            variant="h6" 
+            noWrap
+            sx={{ 
+              display: open ? 'block' : 'none', 
+              color: 'primary.main',
+              fontWeight: 600 
+            }}
+          >
             Precision-Heart
-            </Typography>
+          </Typography>
         </Box>
         <IconButton 
           onClick={() => setOpen(!open)} 
@@ -75,7 +158,7 @@ export default function Sidemenu({ open, setOpen }: SidemenuProps) {
             position: 'absolute',
             right: '-24px',
             top: '0px',
-            borderRadius:'0px',
+            borderRadius: '0px',
             zIndex: 1,
             backgroundColor: theme.palette.primary.main,
             color: 'white',
@@ -94,14 +177,15 @@ export default function Sidemenu({ open, setOpen }: SidemenuProps) {
       </DrawerHeader>
       
       <List>
-        {menuItems.map((item) => (
+        {menuItems.map((item, index) => (
           <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
             <ListItemButton 
+              onClick={() => setActiveIndex(index)}
               sx={{ 
                 justifyContent: open ? 'initial' : 'center',
-                backgroundColor: item.active ? theme.palette.primary.main : 'transparent',
+                backgroundColor: activeIndex === index ? theme.palette.primary.main : 'transparent',
                 '&:hover': {
-                  backgroundColor: item.active ? theme.palette.primary.dark : 'rgba(0, 0, 0, 0.04)',
+                  backgroundColor: activeIndex === index ? theme.palette.primary.dark : 'rgba(0, 0, 0, 0.04)',
                 },
               }}
             >
@@ -109,7 +193,7 @@ export default function Sidemenu({ open, setOpen }: SidemenuProps) {
                 sx={{ 
                   justifyContent: 'center', 
                   mr: open ? 0 : 'auto', 
-                  color: item.active ? 'white' : 'black'
+                  color: activeIndex === index ? 'white' : 'black'
                 }}
               >
                 {item.icon}
@@ -118,7 +202,7 @@ export default function Sidemenu({ open, setOpen }: SidemenuProps) {
                 primary={item.text} 
                 sx={{ 
                   opacity: open ? 1 : 0, 
-                  color: item.active ? 'white' : 'black'
+                  color: activeIndex === index ? 'white' : 'black'
                 }} 
               />
             </ListItemButton>

@@ -3,6 +3,8 @@ import { useTheme, Theme } from '@mui/material/styles';
 import {
   Box,
   CssBaseline,
+  SwipeableDrawer,
+  useMediaQuery,
 } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material/Select';
 
@@ -37,7 +39,7 @@ const styles = {
     overflow: 'hidden',
     flexShrink: 0,
     scrollbarGutter: 'stable',
-    height: 'calc(-113px + 100vh)',
+    height: 'calc(-125px + 100vh)',
   },
   clinicianList: {
     padding: '0px 25px',
@@ -45,15 +47,19 @@ const styles = {
   calendarContainer: {
     flex: '1 1 0%',
     width: '100%',
-    height: 'calc(-113px + 100vh)',
+    height: 'calc(-125px + 100vh)',
   },
 };
 
 export default function Layout() {
   const theme = useTheme();
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
   const [open, setOpen] = useState(false);
   const [week, setWeek] = React.useState('');
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const [filterDrawerOpen, setFilterDrawerOpen] = React.useState(false);
+  const [calendarDrawerOpen, setCalendarDrawerOpen] = React.useState(false);
+  const [clinicianDrawerOpen, setClinicianDrawerOpen] = React.useState(false);
 
   const [events] = useState([
     {
@@ -68,12 +74,35 @@ export default function Layout() {
     },
   ]);
 
+  React.useEffect(() => {
+    const handleToggleFilter = () => {
+      setFilterDrawerOpen(prev => !prev);
+    };
+
+    window.addEventListener('toggleFilterDrawer', handleToggleFilter);
+    return () => {
+      window.removeEventListener('toggleFilterDrawer', handleToggleFilter);
+    };
+  }, []);
+
   const handleChange = (event: SelectChangeEvent) => {
     setWeek(event.target.value);
   };
 
   const toggleDrawer = (open: boolean) => () => {
     setDrawerOpen(open);
+  };
+
+  const toggleFilterDrawer = (open: boolean) => () => {
+    setFilterDrawerOpen(open);
+  };
+
+  const handleCalendarClick = () => {
+    setCalendarDrawerOpen(true);
+  };
+
+  const handleGroupClick = () => {
+    setClinicianDrawerOpen(true);
   };
 
   return (
@@ -86,17 +115,21 @@ export default function Layout() {
           week={week}
           handleChange={handleChange}
           toggleDrawer={toggleDrawer}
+          onCalendarClick={handleCalendarClick}
+          onGroupClick={handleGroupClick}
         />
         
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-          <Box sx={styles.sidebar}>
-            <Box sx={{height:'336px'}}>
-              <MiniCalendar />
+          {!isMobile && (
+            <Box sx={styles.sidebar}>
+              <Box sx={{height:'336px'}}>
+                <MiniCalendar />
+              </Box>
+              <Box sx={styles.clinicianList}>
+                <ClinicianList />
+              </Box>
             </Box>
-            <Box sx={styles.clinicianList}>
-              <ClinicianList />
-            </Box>
-          </Box>
+          )}
           <Box sx={styles.calendarContainer}>
             <WeekCalendar events={events} />
           </Box>
@@ -108,6 +141,30 @@ export default function Layout() {
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}
       />
+
+      
+
+      <SwipeableDrawer
+        anchor="bottom"
+        open={calendarDrawerOpen}
+        onClose={() => setCalendarDrawerOpen(false)}
+        onOpen={() => setCalendarDrawerOpen(true)}
+      >
+        <Box sx={{ height: '50vh', padding: 2 }}>
+          <MiniCalendar />
+        </Box>
+      </SwipeableDrawer>
+
+      <SwipeableDrawer
+        anchor="bottom"
+        open={clinicianDrawerOpen}
+        onClose={() => setClinicianDrawerOpen(false)}
+        onOpen={() => setClinicianDrawerOpen(true)}
+      >
+        <Box sx={{ height: '50vh', padding: 2 }}>
+          <ClinicianList />
+        </Box>
+      </SwipeableDrawer>
     </Box>
   );
 }

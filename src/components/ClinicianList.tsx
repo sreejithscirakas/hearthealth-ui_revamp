@@ -10,6 +10,7 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
+import { useTheme, useMediaQuery, Theme } from '@mui/material';
 
 const doctors = [
   {
@@ -30,6 +31,9 @@ const doctors = [
 ];
 
 const ClinicianList = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
+
   return (
     <div>
       <Typography variant="body1" sx={{ display: 'flex', alignItems: 'center', marginBottom: 0 }}>
@@ -38,7 +42,12 @@ const ClinicianList = () => {
             <AddIcon />
         </Fab>
       </Typography>
-      <List dense sx={{ width: '100%', height: 'calc(100vh - 505px)', overflowY: 'auto', bgcolor: 'background.paper' }}>
+      <List dense sx={{ 
+        width: '100%', 
+        height: isMobile ? '100%' : 'calc(100vh - 505px)', 
+        overflowY: 'auto', 
+        bgcolor: 'background.paper' 
+      }}>
         {doctors.map((doctor) => {
           const labelId = `clinician-list-label-${doctor.id}`;
           return (
