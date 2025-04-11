@@ -105,6 +105,10 @@ export default function Layout() {
     setClinicianDrawerOpen(true);
   };
 
+  const handleEventClick = (event: any) => {
+    setDrawerOpen(true);
+  };
+
   return (
     <Box sx={styles.container}>
       <CssBaseline />
@@ -131,7 +135,7 @@ export default function Layout() {
             </Box>
           )}
           <Box sx={styles.calendarContainer}>
-            <WeekCalendar events={events} />
+            <WeekCalendar events={events} onEventClick={handleEventClick} />
           </Box>
         </Box>
       </Box>
@@ -141,8 +145,6 @@ export default function Layout() {
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}
       />
-
-      
 
       <SwipeableDrawer
         anchor="bottom"

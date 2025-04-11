@@ -12,11 +12,12 @@ interface WeekCalendarProps {
     start: Date;
     end: Date;
   }>;
+  onEventClick?: (event: any) => void;
 }
 
 const EmptyToolbar = () => null;
 
-export default function WeekCalendar({ events }: WeekCalendarProps) {
+export default function WeekCalendar({ events, onEventClick }: WeekCalendarProps) {
   const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
 
   useEffect(() => {
@@ -31,6 +32,12 @@ export default function WeekCalendar({ events }: WeekCalendarProps) {
     };
   }, []);
 
+  const handleEventClick = (event: any) => {
+    if (onEventClick) {
+      onEventClick(event);
+    }
+  };
+
   return (
     <>
       <Calendar
@@ -43,6 +50,7 @@ export default function WeekCalendar({ events }: WeekCalendarProps) {
         components={{
           toolbar: EmptyToolbar,
         }}
+        onSelectEvent={handleEventClick}
       />
       <FilterDrawer
         open={filterDrawerOpen}
