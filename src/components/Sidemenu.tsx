@@ -21,6 +21,7 @@ import ContactPageIcon from '@mui/icons-material/ContactPage';
 import PaymentIcon from '@mui/icons-material/Payment';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useState } from 'react';
+import precisionHeartIcon from "../assets/favicon.png";
 
 const drawerWidth = 240;
 
@@ -140,6 +141,7 @@ export default function Sidemenu({ open, setOpen }: SidemenuProps) {
     <Drawer variant="permanent" open={open}>
       <DrawerHeader>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <img src={precisionHeartIcon} alt="Logo" style={{ height: '40px', marginRight: '8px' }} />
           <Typography 
             variant="h6" 
             noWrap
