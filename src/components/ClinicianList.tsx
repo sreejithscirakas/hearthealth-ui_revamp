@@ -3,77 +3,100 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import IconButton from '@mui/material/IconButton';
-import { useTheme, useMediaQuery, Theme } from '@mui/material';
+import CircleIcon from '@mui/icons-material/Circle';
+import { useMediaQuery, Theme, Box } from '@mui/material';
 
 const doctors = [
   {
     id: 1,
     name: 'Dr. John Smith',
-    photo: 'https://www.shutterstock.com/image-photo/head-shot-woman-wearing-white-600nw-1529466836.jpg',
+    photo:
+      'https://www.shutterstock.com/image-photo/head-shot-woman-wearing-white-600nw-1529466836.jpg',
   },
   {
     id: 2,
     name: 'Dr. Jane Doe',
-    photo: 'https://www.shutterstock.com/image-photo/head-shot-woman-wearing-white-600nw-1529466836.jpg', 
+    photo:
+      'https://www.shutterstock.com/image-photo/head-shot-woman-wearing-white-600nw-1529466836.jpg',
   },
   {
     id: 3,
     name: 'Dr. Emily Johnson',
-    photo: 'https://www.shutterstock.com/image-photo/head-shot-woman-wearing-white-600nw-1529466836.jpg', 
+    photo:
+      'https://www.shutterstock.com/image-photo/head-shot-woman-wearing-white-600nw-1529466836.jpg',
   },
 ];
 
 const ClinicianList = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down('lg')
+  );
 
   return (
-    <div>
-      <Typography variant="body1" sx={{ display: 'flex', alignItems: 'center', marginBottom: 0 }}>
-        Add Clinician
-        <Fab size="small" color="primary" aria-label="Add Clinician" sx={{ marginLeft: 1 }}>
-            <AddIcon />
-        </Fab>
+    <Box>
+      <Typography
+        variant="body1"
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          marginBottom: 0,
+          color: 'green',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        <CircleIcon sx={{ fontSize: '12px', marginRight: '5px' }} /> Available
+        Clinicians
       </Typography>
-      <List dense sx={{ 
-        width: '100%', 
-        height: isMobile ? '100%' : 'calc(100vh - 505px)', 
-        overflowY: 'auto', 
-        bgcolor: 'background.paper' 
-      }}>
+      <List
+        dense
+        sx={{
+          display: isMobile ? 'flex' : 'block',
+          width: isMobile ? '100%' : '100%',
+          height: isMobile ? 'auto' : 'calc(100vh - 505px)',
+          overflowY: isMobile ? 'hidden' : 'auto',
+          overflowX: isMobile ? 'auto' : 'hidden',
+          bgcolor: 'background.paper',
+          '&::-webkit-scrollbar': {
+            height: '4px',
+          },
+          '&::-webkit-scrollbar-track': {
+            background: '#f1f1f1',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            background: '#888',
+            borderRadius: '2px',
+          },
+        }}
+      >
         {doctors.map((doctor) => {
           const labelId = `clinician-list-label-${doctor.id}`;
           return (
             <ListItem 
-              key={doctor.id} 
-              disablePadding
-              secondaryAction={
-                <IconButton edge="end" aria-label="edit" size="small">
-                  <EditIcon fontSize="small" />
-                </IconButton>
-              }
+              key={doctor.id}
+              sx={{
+                width: isMobile ? 'auto' : '100%',
+                minWidth: isMobile ? '200px' : 'auto',
+              }}
             >
               <ListItemButton>
                 <ListItemAvatar>
-                  <Avatar
-                    alt={doctor.name}
-                    src={doctor.photo}
-                  />
+                  <Avatar alt={doctor.name} src={doctor.photo} />
                 </ListItemAvatar>
-                <ListItemText id={labelId} primary={doctor.name} />
+                <ListItemText 
+                  id={labelId} 
+                  primary={doctor.name}
+                  sx={{
+                    whiteSpace: 'nowrap',
+                  }}
+                />
               </ListItemButton>
             </ListItem>
           );
         })}
       </List>
-    </div>
+    </Box>
   );
 };
 

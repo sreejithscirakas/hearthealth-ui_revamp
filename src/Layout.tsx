@@ -30,6 +30,7 @@ const styles = {
     flexGrow: 1,
     p: '0 0px',
     margin: 0,
+    width:'100%',
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -48,12 +49,9 @@ const styles = {
   clinicianList: {
     padding: '0px 25px',
   },
-  calendarContainer: {
-    flex: '1 1 0%',
-    width: '100%',
-    height: 'calc(-125px + 100vh)',
-  },
 };
+
+
 
 export default function Layout() {
   const theme = useTheme();
@@ -163,10 +161,14 @@ export default function Layout() {
                   </Box>
                 </Box>
               )}
-              <Box sx={styles.calendarContainer}>
+              <Box sx={{ flex: '1 1 0%',width: '100%', height: isMobile ? 'calc(-270px + 100vh)' : 'calc(-125px + 100vh)'}}>
                 <WeekCalendar events={events} onEventClick={handleEventClick} />
               </Box>
+              
             </Box>
+            <Box className="resscreen_clinicianlist" sx={{display: isMobile ? 'block' : 'none',marginTop:'25px',}}>
+                <ClinicianList />
+              </Box>
           </>
         )}
 

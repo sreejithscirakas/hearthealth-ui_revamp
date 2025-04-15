@@ -36,8 +36,15 @@ export default function CustomToolbar({ week, handleChange, toggleDrawer, onCale
   };
 
   return (
-    <Box className="CustomToolbar" sx={{ display: 'flex', justifyContent: 'space-between', paddingBottom: isMobile ? '20px' : '10px', paddingTop: isMobile ? '10px' : '0px' }}>
-      <Box display="flex" alignItems="center" sx={{ gap: '20px', padding: '0px 25px' }}>
+    <Box className="CustomToolbar" 
+    sx={{ 
+      display: 'flex', 
+      width:'100%',
+      justifyContent: 'space-between', 
+      paddingBottom: isMobile ? '20px' : '10px', 
+      paddingTop: isMobile ? '10px' : '0px' 
+      }}>
+      <Box display="flex" alignItems="center" sx={{ gap: isMobile ? '0px' : '20px', padding: isMobile ? '0px 0px' : '0px 25px' }}>
         {!isMobile && (
           <Button variant="outlined" size="medium">
             Today
@@ -60,7 +67,7 @@ export default function CustomToolbar({ week, handleChange, toggleDrawer, onCale
           )}
         </Box>
 
-        <FormControl sx={{ margin: '0', padding: '0', minWidth: 120 }}>
+        <FormControl sx={{ margin: '0', padding: '0', minWidth: isMobile ? 'auto' : 120 }}>
           <Select
             value={week || (isMobile ? 'today' : 'week')}
             onChange={handleChange}
@@ -90,21 +97,9 @@ export default function CustomToolbar({ week, handleChange, toggleDrawer, onCale
         </FormControl>
       </Box>
 
-      <Box display="flex" alignItems="center" sx={{ gap: '20px', paddingRight: '15px' }}>
+      <Box display="flex" alignItems="center" sx={{ gap: isMobile ? '10px' : '20px', paddingRight: isMobile ? '15px' : '15px' }}>
         {isMobile ? (
           <>
-            <IconButton 
-              size="medium" 
-              onClick={onGroupClick}
-              sx={{
-                backgroundColor: theme.palette.grey[100],
-                '&:hover': {
-                  backgroundColor: theme.palette.grey[200],
-                },
-              }}
-            >
-              <GroupAdd />
-            </IconButton>
             <IconButton 
               size="medium" 
               onClick={handleFilterClick}

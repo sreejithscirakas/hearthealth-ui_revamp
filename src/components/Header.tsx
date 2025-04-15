@@ -8,14 +8,21 @@ import {
   Typography,
   Box,
   useMediaQuery,
-  Theme
+  Theme,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  Divider,
 } from '@mui/material';
 import {
   AddRounded,
   HelpRounded,
   NotificationsRounded,
   ArrowDropDown,
+  Person as PersonIcon,
+  Logout as LogoutIcon,
 } from '@mui/icons-material';
+import { useState } from 'react';
 
 const styles = {
   appBar: {
@@ -57,6 +64,16 @@ const styles = {
 
 export default function Header() {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   if (isMobile) {
     return null;
@@ -79,13 +96,64 @@ export default function Header() {
           </Badge>
         </IconButton>
 
-        <Box style={styles.userContainer}>
+        <Box 
+          style={styles.userContainer}
+          onClick={handleClick}
+          aria-controls={open ? 'user-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+        >
           <Avatar sx={styles.avatar}>PM</Avatar>
           <Typography sx={styles.username} variant="subtitle1" aria-label="User">Practice Manager</Typography>
           <IconButton sx={{padding: '5px', margin: '0'}} aria-label="Activity">
             <ArrowDropDown/>
           </IconButton>
         </Box>
+
+        <Menu
+          id="user-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          onClick={handleClose}
+          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+          PaperProps={{
+            sx: {
+              mt: 1,
+              width: 320,
+              '& .MuiMenuItem-root': {
+                py: 1.5,
+              },
+            },
+          }}
+        >
+          <Box sx={{ px: 2, py: 1.5 }}>
+            <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>Practice Manager</Typography>
+            <Typography variant="body2" color="text.secondary">manager@example.com</Typography>
+          </Box>
+          <Divider />
+          <Box sx={{ p: 1 }}>
+            <Typography variant="overline" sx={{ px: 1, color: 'text.secondary' }}>
+              Account
+            </Typography>
+            <MenuItem>
+              <ListItemIcon>
+                <PersonIcon fontSize="small" />
+              </ListItemIcon>
+              My Profile
+            </MenuItem>
+          </Box>
+          <Divider />
+          <Box sx={{ p: 1 }}>
+            <MenuItem sx={{ color: 'error.main' }}>
+              <ListItemIcon>
+                <LogoutIcon fontSize="small" color="error" />
+              </ListItemIcon>
+              Sign out
+            </MenuItem>
+          </Box>
+        </Menu>
       </Toolbar>
     </AppBar>
   );

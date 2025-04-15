@@ -20,10 +20,14 @@ import {
   IconButton,
   useTheme,
   useMediaQuery,
+  TablePagination,
 } from '@mui/material';
-import { Search as SearchIcon, Add as AddIcon, PhotoCamera } from '@mui/icons-material';
+import {
+  Search as SearchIcon,
+  Add as AddIcon,
+  PhotoCamera,
+} from '@mui/icons-material';
 import InfoIcon from '@mui/icons-material/Info';
-
 
 interface Clinician {
   id: string;
@@ -71,14 +75,17 @@ function getInitials(name: string) {
     : names[0].substring(0, 2);
 }
 
+const ROWS_PER_PAGE = 5;
+
 export default function Clinicians() {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
   const [clinicians] = useState<Clinician[]>(initialClinicians);
   const [searchQuery, setSearchQuery] = useState('');
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [page, setPage] = useState(0);
   const [newClinician, setNewClinician] = useState({
     name: '',
     email: '',
@@ -92,6 +99,10 @@ export default function Clinicians() {
       clinician.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
       clinician.designation.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -115,12 +126,13 @@ export default function Clinicians() {
     handleClose();
   };
 
-  const handleInputChange = (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewClinician({
-      ...newClinician,
-      [field]: event.target.value,
-    });
-  };
+  const handleInputChange =
+    (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setNewClinician({
+        ...newClinician,
+        [field]: event.target.value,
+      });
+    };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -131,68 +143,69 @@ export default function Clinicians() {
   };
 
   const EmptyState = () => (
-    <Box 
-      sx={{ 
-        display: 'flex', 
-        flexDirection: 'column', 
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         py: 8,
         px: 2,
-        textAlign: 'center'
+        textAlign: 'center',
       }}
     >
       <InfoIcon />
       <Typography variant="h6" sx={{ mt: 2, color: 'text.primary' }}>
         No Clinicians Found
       </Typography>
-      <Typography variant="body2" color="text.secondary" sx={{ mt: 1, maxWidth: 400 }}>
-        There are no clinicians matching your search criteria. Try adjusting your search or add a new clinician.
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        sx={{ mt: 1, maxWidth: 400 }}
+      >
+        There are no clinicians matching your search criteria. Try adjusting
+        your search or add a new clinician.
       </Typography>
     </Box>
   );
 
   return (
-    <Box sx={{ p: isMobile ? 2 : 3, height:'calc(100vh - 56px)' }}>
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h5" component="h1" sx={{ 
-          color: 'primary.main',
-          fontWeight: 600,
-          mb: 3 
-        }}>
+    <Box sx={{ padding: '0px 25px', height: 'calc(100vh - 56px)' }}>
+      <Box sx={{ mb: 3 }}>
+        <Typography
+          variant="h6"
+          sx={{
+            color: 'primary.main',
+            fontWeight: 600,
+            mb: 3,
+          }}
+        >
           Clinicians
         </Typography>
 
-        <Box sx={{ 
-          display: 'flex', 
-          flexDirection: isMobile ? 'column' : 'row',
-          alignItems: isMobile ? 'stretch' : 'center', 
-          gap: 2, 
-          mb: 3 
-        }}>
-          {isMobile && (
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={handleClickOpen}
-              fullWidth
-            >
-              Add New Clinician
-            </Button>
-          )}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            alignItems: isMobile ? 'stretch' : 'center',
+            gap: 2,
+            mb: 3,
+          }}
+        >
           
+
           <TextField
             placeholder="Search clinicians"
             variant="outlined"
             size="small"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            sx={{ 
+            sx={{
               flexGrow: 1,
               maxWidth: isMobile ? '100%' : 400,
               '& .MuiOutlinedInput-root': {
                 backgroundColor: '#f5f5f5',
-              }
+              },
             }}
             InputProps={{
               startAdornment: (
@@ -203,83 +216,95 @@ export default function Clinicians() {
             }}
           />
 
-          {!isMobile && (
+          
             <Button
-              variant="contained"
+              variant="outlined"
               startIcon={<AddIcon />}
               onClick={handleClickOpen}
             >
               Add New Clinician
             </Button>
-          )}
+          
         </Box>
       </Box>
 
-      <TableContainer 
+      <TableContainer
         component={Paper}
-        sx={{ 
+        sx={{
           boxShadow: 'none',
           border: '0px solid #e0e0e0',
-          minHeight: filteredClinicians.length === 0 ? 400 : 'auto'
+          minHeight: filteredClinicians.length === 0 ? 400 : 'auto',
         }}
       >
         {filteredClinicians.length === 0 ? (
           <EmptyState />
         ) : (
-          <Table sx={{ minWidth: isMobile ? 'auto' : 650 }}>
-            <TableHead>
-              <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
-                <TableCell>Profile</TableCell>
-                <TableCell>Name</TableCell>
-                {!isMobile && (
-                  <>
-                    <TableCell>Email</TableCell>
-                    <TableCell>Phone</TableCell>
-                    <TableCell>Designation</TableCell>
-                  </>
-                )}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredClinicians.map((clinician) => (
-                <TableRow
-                  key={clinician.id}
-                  sx={{
-                    '&:last-child td, &:last-child th': { border: 0 },
-                    cursor: 'pointer',
-                    '&:hover': {
-                      backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                    },
-                    transition: 'background-color 0.2s ease',
-                  }}
-                >
-                  <TableCell>
-                    <Avatar
-                      src={clinician.photo}
-                      alt={clinician.name}
-                      sx={{ 
-                        width: 40, 
-                        height: 40,
-                        bgcolor: stringToColor(clinician.name)
-                      }}
-                    >
-                      {getInitials(clinician.name)}
-                    </Avatar>
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    {clinician.name}
-                  </TableCell>
+          <>
+            <Table sx={{ minWidth: isMobile ? 'auto' : 650 }}>
+              <TableHead>
+                <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
+                  <TableCell>Profile</TableCell>
+                  <TableCell>Name</TableCell>
                   {!isMobile && (
                     <>
-                      <TableCell>{clinician.email}</TableCell>
-                      <TableCell>{clinician.phone}</TableCell>
-                      <TableCell>{clinician.designation}</TableCell>
+                      <TableCell>Email</TableCell>
+                      <TableCell>Phone</TableCell>
+                      <TableCell>Designation</TableCell>
                     </>
                   )}
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHead>
+              <TableBody>
+                {filteredClinicians
+                  .slice(page * ROWS_PER_PAGE, page * ROWS_PER_PAGE + ROWS_PER_PAGE)
+                  .map((clinician) => (
+                    <TableRow
+                      key={clinician.id}
+                      sx={{
+                        '&:last-child td, &:last-child th': { border: 0 },
+                        cursor: 'pointer',
+                        '&:hover': {
+                          backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                        },
+                        transition: 'background-color 0.2s ease',
+                      }}
+                    >
+                      <TableCell>
+                        <Avatar
+                          src={clinician.photo}
+                          alt={clinician.name}
+                          sx={{
+                            width: 40,
+                            height: 40,
+                            bgcolor: stringToColor(clinician.name),
+                          }}
+                        >
+                          {getInitials(clinician.name)}
+                        </Avatar>
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {clinician.name}
+                      </TableCell>
+                      {!isMobile && (
+                        <>
+                          <TableCell>{clinician.email}</TableCell>
+                          <TableCell>{clinician.phone}</TableCell>
+                          <TableCell>{clinician.designation}</TableCell>
+                        </>
+                      )}
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+            <TablePagination
+              component="div"
+              count={filteredClinicians.length}
+              page={page}
+              onPageChange={handleChangePage}
+              rowsPerPage={ROWS_PER_PAGE}
+              rowsPerPageOptions={[ROWS_PER_PAGE]}
+            />
+          </>
         )}
       </TableContainer>
 
@@ -292,14 +317,18 @@ export default function Clinicians() {
                 <Avatar
                   src={previewUrl}
                   alt={newClinician.name || 'Preview'}
-                  sx={{ 
-                    width: 100, 
+                  sx={{
+                    width: 100,
                     height: 100,
                     color: 'primary.main',
-                    bgcolor: newClinician.name ? stringToColor(newClinician.name) : 'grey.300'
+                    bgcolor: newClinician.name
+                      ? stringToColor(newClinician.name)
+                      : 'grey.300',
                   }}
                 >
-                  {newClinician.name ? getInitials(newClinician.name) : 'Upload'}
+                  {newClinician.name
+                    ? getInitials(newClinician.name)
+                    : 'Upload'}
                 </Avatar>
                 <input
                   accept="image/*"
@@ -319,7 +348,7 @@ export default function Clinicians() {
                       right: -8,
                       backgroundColor: 'white',
                       boxShadow: 1,
-                      '&:hover': { backgroundColor: 'grey.100' }
+                      '&:hover': { backgroundColor: 'grey.100' },
                     }}
                   >
                     <PhotoCamera />
@@ -354,9 +383,19 @@ export default function Clinicians() {
             />
           </Box>
         </DialogContent>
-        <DialogActions sx={{display:'flex',justifyContent:'center',marginBottom:'20px'}}>
-          <Button onClick={handleSave} variant="contained">Save</Button>
-          <Button onClick={handleClose} variant="outlined">Cancel</Button>
+        <DialogActions
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginBottom: '20px',
+          }}
+        >
+          <Button onClick={handleSave} variant="contained">
+            Save
+          </Button>
+          <Button onClick={handleClose} variant="outlined">
+            Cancel
+          </Button>
         </DialogActions>
       </Dialog>
     </Box>

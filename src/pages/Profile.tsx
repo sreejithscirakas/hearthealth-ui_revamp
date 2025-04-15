@@ -55,7 +55,6 @@ export default function Profile() {
   };
 
   const handleSave = () => {
-    // Here you would typically send the updated profile to your backend
     console.log('Saving profile:', profile);
     setIsEditing(false);
   };
@@ -91,22 +90,12 @@ export default function Profile() {
         >
           Personal details
           <Button
-            variant="text"
-            size="small"
+            variant="outlined"
+            endIcon={<EditIcon />}
             onClick={() => setIsEditing(!isEditing)}
-            sx={{
-              color: 'primary.main',
-              textTransform: 'none',
-              fontSize: '0.875rem',
-              padding: '2px 8px',
-              minWidth: 'auto',
-              backgroundColor: 'rgba(255, 0, 130, 0.08)',
-              '&:hover': {
-                backgroundColor: 'rgba(255, 0, 130, 0.12)',
-              },
-            }}
+            
           >
-            {isEditing ? 'Cancel Editing' : 'Edit Profile'}
+          Edit
           </Button>
         </Typography>
       </Box>
