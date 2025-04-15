@@ -15,6 +15,10 @@ import AppointmentDrawer from './components/AppointmentDrawer';
 import MiniCalendar from './components/MiniCalendar';
 import WeekCalendar from './components/WeekCalendar';
 import ClinicianList from './components/ClinicianList';
+import SignupRequests from './pages/SignupRequests';
+import Clinicians from './pages/Clinicians';
+import BillPayment from './pages/BillPayment';
+import Profile from './pages/Profile';
 
 const styles = {
   container: {
@@ -60,6 +64,7 @@ export default function Layout() {
   const [filterDrawerOpen, setFilterDrawerOpen] = React.useState(false);
   const [calendarDrawerOpen, setCalendarDrawerOpen] = React.useState(false);
   const [clinicianDrawerOpen, setClinicianDrawerOpen] = React.useState(false);
+  const [activeView, setActiveView] = React.useState('calendar');
 
   const [events] = useState([
     {
@@ -109,35 +114,66 @@ export default function Layout() {
     setDrawerOpen(true);
   };
 
+  const handleMenuItemClick = (index: number) => {
+    switch (index) {
+      case 0:
+        setActiveView('calendar');
+        break;
+      case 1:
+        setActiveView('signup-requests');
+        break;
+      case 2:
+        setActiveView('clinicians');
+        break;
+      case 3:
+        setActiveView('billing');
+        break;
+      case 4:
+        setActiveView('profile');
+        break;
+      default:
+        setActiveView('calendar');
+    }
+  };
+
   return (
     <Box sx={styles.container}>
       <CssBaseline />
-      <Sidemenu open={open} setOpen={setOpen} />
+      <Sidemenu open={open} setOpen={setOpen} onMenuItemClick={handleMenuItemClick} />
       <Box component="main" sx={styles.main(theme)}>
         <Header />
-        <CustomToolbar 
-          week={week}
-          handleChange={handleChange}
-          toggleDrawer={toggleDrawer}
-          onCalendarClick={handleCalendarClick}
-          onGroupClick={handleGroupClick}
-        />
-        
-        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-          {!isMobile && (
-            <Box sx={styles.sidebar}>
-              <Box sx={{height:'336px'}}>
-                <MiniCalendar />
-              </Box>
-              <Box sx={styles.clinicianList}>
-                <ClinicianList />
+        {activeView === 'calendar' && (
+          <>
+            <CustomToolbar 
+              week={week}
+              handleChange={handleChange}
+              toggleDrawer={toggleDrawer}
+              onCalendarClick={handleCalendarClick}
+              onGroupClick={handleGroupClick}
+            />
+            
+            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+              {!isMobile && (
+                <Box sx={styles.sidebar}>
+                  <Box sx={{height:'336px'}}>
+                    <MiniCalendar />
+                  </Box>
+                  <Box sx={styles.clinicianList}>
+                    <ClinicianList />
+                  </Box>
+                </Box>
+              )}
+              <Box sx={styles.calendarContainer}>
+                <WeekCalendar events={events} onEventClick={handleEventClick} />
               </Box>
             </Box>
-          )}
-          <Box sx={styles.calendarContainer}>
-            <WeekCalendar events={events} onEventClick={handleEventClick} />
-          </Box>
-        </Box>
+          </>
+        )}
+
+        {activeView === 'signup-requests' && <SignupRequests />}
+        {activeView === 'clinicians' && <Clinicians />}
+        {activeView === 'billing' && <BillPayment />}
+        {activeView === 'profile' && <Profile />}
       </Box>
 
       <AppointmentDrawer

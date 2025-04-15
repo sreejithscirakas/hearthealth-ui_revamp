@@ -20,6 +20,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
 import PaymentIcon from '@mui/icons-material/Payment';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import GroupIcon from '@mui/icons-material/Group';
 import { useState } from 'react';
 import precisionHeartIcon from "../assets/favicon.png";
 
@@ -52,19 +53,26 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 interface SidemenuProps {
   open: boolean;
   setOpen: (open: boolean) => void;
+  onMenuItemClick: (index: number) => void;
 }
 
 const menuItems = [
   { text: 'Calendar', mobileText: 'Calendar', icon: <CalendarTodayIcon /> },
   { text: 'Signup Requests', mobileText: 'Requests', icon: <ContactPageIcon /> },
+  { text: 'Clinicians', mobileText: 'Clinicians', icon: <GroupIcon /> },
   { text: 'Billing', mobileText: 'Billing', icon: <PaymentIcon /> },
   { text: 'Profile', mobileText: 'Profile', icon: <AccountCircleIcon /> },
 ];
 
-export default function Sidemenu({ open, setOpen }: SidemenuProps) {
+export default function Sidemenu({ open, setOpen, onMenuItemClick }: SidemenuProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const handleItemClick = (index: number) => {
+    setActiveIndex(index);
+    onMenuItemClick(index);
+  };
 
   if (isMobile) {
     return (
@@ -74,7 +82,7 @@ export default function Sidemenu({ open, setOpen }: SidemenuProps) {
           aria-label="add"
           sx={{
             position: 'fixed',
-            bottom: 30,
+            bottom: 50,
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 1100,
@@ -98,7 +106,7 @@ export default function Sidemenu({ open, setOpen }: SidemenuProps) {
           <BottomNavigation
             value={activeIndex}
             onChange={(event, newValue) => {
-              setActiveIndex(newValue);
+              handleItemClick(newValue);
             }}
             sx={{
               '& .Mui-selected': {
@@ -182,7 +190,7 @@ export default function Sidemenu({ open, setOpen }: SidemenuProps) {
         {menuItems.map((item, index) => (
           <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
             <ListItemButton 
-              onClick={() => setActiveIndex(index)}
+              onClick={() => handleItemClick(index)}
               sx={{ 
                 justifyContent: open ? 'initial' : 'center',
                 backgroundColor: activeIndex === index ? theme.palette.primary.main : 'transparent',

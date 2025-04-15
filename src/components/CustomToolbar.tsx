@@ -36,7 +36,7 @@ export default function CustomToolbar({ week, handleChange, toggleDrawer, onCale
   };
 
   return (
-    <Box className="CustomToolbar" sx={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '20px' }}>
+    <Box className="CustomToolbar" sx={{ display: 'flex', justifyContent: 'space-between', paddingBottom: isMobile ? '20px' : '10px', paddingTop: isMobile ? '10px' : '0px' }}>
       <Box display="flex" alignItems="center" sx={{ gap: '20px', padding: '0px 25px' }}>
         {!isMobile && (
           <Button variant="outlined" size="medium">

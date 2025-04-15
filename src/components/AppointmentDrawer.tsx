@@ -130,7 +130,7 @@ const formatFileName = (fileName: string): string => {
 
 export default function AppointmentDrawer({ open, onClose, onOpen }: AppointmentDrawerProps) {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [tabValue, setTabValue] = React.useState(0);
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
@@ -247,7 +247,7 @@ export default function AppointmentDrawer({ open, onClose, onOpen }: Appointment
         </Box>
 
         <TabPanel value={tabValue} index={0}>
-          <Box sx={{ padding: '0 20px' }}>
+          <Box sx={{ padding: '0 20px',height:'calc(100vh - 235px)', overflowY:'auto' }}>
             <Box sx={{ display:'flex',justifyContent:'flex-end', mb: 2 }}>
               <Typography variant="subtitle1" sx={{ display: 'flex', alignItems: 'center', marginBottom: 0 }}>
                 Appointment Status:
@@ -357,7 +357,7 @@ export default function AppointmentDrawer({ open, onClose, onOpen }: Appointment
                       position: 'relative',
                       cursor: 'pointer',
                       '&:hover': {
-                        borderColor: theme.palette.primary.main,
+                        borderColor: '#ddd',
                       }
                     }}
                   >
@@ -442,7 +442,7 @@ export default function AppointmentDrawer({ open, onClose, onOpen }: Appointment
                     primary={formatFileName(recording.name)}
                     secondary={`${recording.format.toUpperCase()} • ${recording.size} • ${recording.date}`}
                   />
-                  <IconButton edge="end" aria-label="download">
+                  <IconButton edge="end" aria-label="download" color="primary">
                     <Download />
                   </IconButton>
                 </ListItem>

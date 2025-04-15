@@ -46,7 +46,7 @@ export default function WeekCalendar({ events, onEventClick }: WeekCalendarProps
         startAccessor="start"
         endAccessor="end"
         style={{ height: '100%' }}
-        defaultView="week"
+        defaultView="month"
         components={{
           toolbar: EmptyToolbar,
         }}
