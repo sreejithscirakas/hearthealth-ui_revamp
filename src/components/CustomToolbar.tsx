@@ -95,6 +95,14 @@ export default function CustomToolbar({ week, handleChange, toggleDrawer, onCale
             <MenuItem value="month">Month</MenuItem>
           </Select>
         </FormControl>
+        <Box sx={{display:'flex',flexWrap: isMobile ? 'wrap': 'unset', alignItems:'center',gap:isMobile ?'5px':'10px', marginLeft:isMobile ?'10px':'0'}}>
+        <Typography variant="body2" sx={{display:'flex',alignItems:'center',fontSize:'12px'}}>
+          <Box sx={{backgroundColor:'#0080002e',borderRadius:'2px',border:'solid 2px green',padding:'5px',marginRight:'5px'}}></Box> Available
+        </Typography>
+        <Typography variant="body2" sx={{display:'flex',alignItems:'center',fontSize:'12px'}}>
+        <Box sx={{backgroundColor:'#ff000029',borderRadius:'2px',border:'solid 2px red',padding:'5px',marginRight:'5px'}}></Box> Not Available
+        </Typography>
+      </Box>
       </Box>
 
       <Box display="flex" alignItems="center" sx={{ gap: isMobile ? '10px' : '20px', paddingRight: isMobile ? '15px' : '15px' }}>
