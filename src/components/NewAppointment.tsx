@@ -290,10 +290,10 @@ export default function NewAppointments({
             }}
           >
             <Grid container spacing={1}>
-              <Grid size={{ xs: 7 }}>
+              <Grid size={{ xs: 12, md: 7 }}>
                 <MiniCalendar />
               </Grid>
-              <Grid size={{ xs: 5 }}>
+              <Grid size={{ xs: 12, md: 7 }}>
                 <Box
                   sx={{
                     display: 'flex',
