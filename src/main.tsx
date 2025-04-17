@@ -10,7 +10,7 @@ import { ThemeProvider } from '@mui/material/styles';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
-      <ClinicianLayout />
+      <PatientLayout />
     </ThemeProvider>
   </StrictMode>,
 )

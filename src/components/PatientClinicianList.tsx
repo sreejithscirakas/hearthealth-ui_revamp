@@ -26,6 +26,24 @@ const doctors = [
     photo:
       'https://www.shutterstock.com/image-photo/head-shot-woman-wearing-white-600nw-1529466836.jpg',
   },
+  {
+    id: 4,
+    name: 'Dr. John Smith',
+    photo:
+      'https://www.shutterstock.com/image-photo/head-shot-woman-wearing-white-600nw-1529466836.jpg',
+  },
+  {
+    id: 5,
+    name: 'Dr. Jane Doe',
+    photo:
+      'https://www.shutterstock.com/image-photo/head-shot-woman-wearing-white-600nw-1529466836.jpg',
+  },
+  {
+    id: 6,
+    name: 'Dr. Emily Johnson',
+    photo:
+      'https://www.shutterstock.com/image-photo/head-shot-woman-wearing-white-600nw-1529466836.jpg',
+  },
 ];
 
 const ClinicianList = () => {
@@ -56,17 +74,6 @@ const ClinicianList = () => {
           height: isMobile ? 'auto' : 'calc(100vh - 505px)',
           overflowY: isMobile ? 'hidden' : 'auto',
           overflowX: isMobile ? 'auto' : 'hidden',
-          bgcolor: 'background.paper',
-          '&::-webkit-scrollbar': {
-            height: '4px',
-          },
-          '&::-webkit-scrollbar-track': {
-            background: '#f1f1f1',
-          },
-          '&::-webkit-scrollbar-thumb': {
-            background: '#888',
-            borderRadius: '2px',
-          },
         }}
       >
         {doctors.map((doctor) => {

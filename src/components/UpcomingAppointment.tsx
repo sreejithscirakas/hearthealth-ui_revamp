@@ -1,5 +1,5 @@
 import { Box, Typography, Stack } from '@mui/material';
-import { Clock } from 'lucide-react';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 interface Appointment {
   id: string;
@@ -13,20 +13,24 @@ interface UpcomingAppointmentProps {
   onClick?: (appointmentId: string) => void;
 }
 
+
+
+
+
 export default function UpcomingAppointment({ appointments, onClick }: UpcomingAppointmentProps) {
   return (
     <Box>
-      <Typography variant="h6" sx={{ mb: 2, fontWeight: 500 }}>
+      <Typography variant="body1" sx={{ mb: 2, fontWeight: 500 }}>
         Upcoming appointments
       </Typography>
       
-      <Stack spacing={1}>
+      <Stack spacing={1} sx={{height:'calc(100vh - 510px)',overflowY:'auto'}}>
         {appointments.map((appointment) => (
           <Box
             key={appointment.id}
             sx={{
               backgroundColor: '#f8f9fa',
-              borderRadius: 2,
+              borderRadius: 1,
               p: 2,
               cursor: 'pointer',
               transition: 'all 0.2s ease-in-out',
@@ -40,7 +44,6 @@ export default function UpcomingAppointment({ appointments, onClick }: UpcomingA
             <Typography 
               variant="subtitle1" 
               sx={{ 
-                fontWeight: 500,
                 color: 'text.primary',
                 mb: 0.5
               }}
@@ -49,7 +52,7 @@ export default function UpcomingAppointment({ appointments, onClick }: UpcomingA
             </Typography>
             
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Clock size={16} color="#6B7280" />
+              <AccessTimeIcon/>
               <Typography 
                 variant="body2" 
                 sx={{ 

@@ -14,19 +14,19 @@ import {
   Divider,
 } from '@mui/material';
 import {
-  AddRounded,
   ArrowDropDown,
   Person as PersonIcon,
   Logout as LogoutIcon,
 } from '@mui/icons-material';
 import { useState } from 'react';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const styles = {
   appBar: {
     backgroundColor: 'white',
     color: 'black',
     boxShadow: 'none',
-    paddingRight: '15px'
+    paddingRight: '15px',
   },
   toolbar: {
     display: 'flex',
@@ -35,7 +35,7 @@ const styles = {
     paddingLeft: '0 !important',
     paddingRight: '0 !important',
     minHeight: 'auto !important',
-    margin: '5px 0px 10px 0px'
+    margin: '10px 0px 10px 0px',
   },
   userContainer: {
     display: 'flex',
@@ -55,8 +55,8 @@ const styles = {
   username: {
     fontSize: '0.8em',
     paddingLeft: '5px',
-    fontWeight: '600'
-  }
+    fontWeight: '600',
+  },
 };
 
 interface HeaderProps {
@@ -64,8 +64,9 @@ interface HeaderProps {
 }
 
 export default function Header({ onNewAppointment }: HeaderProps) {
-
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down('md')
+  );
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -81,19 +82,19 @@ export default function Header({ onNewAppointment }: HeaderProps) {
     return null;
   }
 
-
   return (
     <AppBar position="static" sx={styles.appBar}>
       <Toolbar sx={styles.toolbar}>
-        <Button sx={{ minWidth: 'auto'}} variant="contained" aria-label="Quick actions"
-        onClick={onNewAppointment}
+        <Button
+          sx={{ minWidth: 'auto' }}
+          variant="contained"
+          aria-label="Mark Available"
+          onClick={onNewAppointment}
         >
-          <AddRounded /> Mark Available
+          <AccessTimeIcon sx={{marginRight:'3px'}}/> Mark Available
         </Button>
 
-        
-
-        <Box 
+        <Box
           style={styles.userContainer}
           onClick={handleClick}
           aria-controls={open ? 'user-menu' : undefined}
@@ -101,9 +102,18 @@ export default function Header({ onNewAppointment }: HeaderProps) {
           aria-expanded={open ? 'true' : undefined}
         >
           <Avatar sx={styles.avatar}>CU</Avatar>
-          <Typography sx={styles.username} variant="subtitle1" aria-label="User">Clinician User</Typography>
-          <IconButton sx={{padding: '5px', margin: '0'}} aria-label="Activity">
-            <ArrowDropDown/>
+          <Typography
+            sx={styles.username}
+            variant="subtitle1"
+            aria-label="User"
+          >
+            Clinician User
+          </Typography>
+          <IconButton
+            sx={{ padding: '5px', margin: '0' }}
+            aria-label="Activity"
+          >
+            <ArrowDropDown />
           </IconButton>
         </Box>
 
@@ -126,12 +136,19 @@ export default function Header({ onNewAppointment }: HeaderProps) {
           }}
         >
           <Box sx={{ px: 2, py: 1.5 }}>
-            <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>Clinician User</Typography>
-            <Typography variant="body2" color="text.secondary">clinician@example.com</Typography>
+            <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+              Clinician User
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              clinician@example.com
+            </Typography>
           </Box>
           <Divider />
           <Box sx={{ p: 1 }}>
-            <Typography variant="overline" sx={{ px: 1, color: 'text.secondary' }}>
+            <Typography
+              variant="overline"
+              sx={{ px: 1, color: 'text.secondary' }}
+            >
               Account
             </Typography>
             <MenuItem>

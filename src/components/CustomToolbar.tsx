@@ -41,8 +41,8 @@ export default function CustomToolbar({ week, handleChange, toggleDrawer, onCale
       display: 'flex', 
       width:'100%',
       justifyContent: 'space-between', 
-      paddingBottom: isMobile ? '20px' : '10px', 
-      paddingTop: isMobile ? '10px' : '0px' 
+      paddingBottom: isMobile ? '20px' : '20px', 
+      paddingTop: isMobile ? '10px' : '10px' 
       }}>
       <Box display="flex" alignItems="center" sx={{ gap: isMobile ? '0px' : '20px', padding: isMobile ? '0px 0px' : '0px 25px' }}>
         {!isMobile && (

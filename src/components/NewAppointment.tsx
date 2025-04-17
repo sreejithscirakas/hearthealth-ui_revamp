@@ -532,6 +532,7 @@ export default function NewAppointments({
               </Button>
               <Button
                 variant="outlined"
+                onClick={onClose}
                 sx={{color:'primary.main'}}
               >
                 Cancel

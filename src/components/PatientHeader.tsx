@@ -35,7 +35,7 @@ const styles = {
     paddingLeft: '0 !important',
     paddingRight: '0 !important',
     minHeight: 'auto !important',
-    margin: '5px 0px 10px 0px'
+    margin: '10px 0px 10px 0px'
   },
   userContainer: {
     display: 'flex',

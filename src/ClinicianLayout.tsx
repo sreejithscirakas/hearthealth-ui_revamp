@@ -14,11 +14,10 @@ import CustomToolbar from './components/CustomToolbar';
 import AppointmentDrawer from './components/AppointmentDrawer';
 import MiniCalendar from './components/MiniCalendar';
 import WeekCalendar from './components/WeekCalendar';
-import PatientClinicianList from './components/PatientClinicianList';
-import Clinicians from './pages/Clinicians';
 import BillPayment from './pages/BillPayment';
 import Profile from './pages/Profile';
-import NewAppointments from './components/NewAppointment';
+import MarkAvailable from './components/MarkAvailable';
+import UpcomingAppointment from './components/UpcomingAppointment';
 
 const styles = {
   container: {
@@ -30,7 +29,7 @@ const styles = {
     flexGrow: 1,
     p: '0 0px',
     margin: 0,
-    width:'100%',
+    width: '100%',
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -47,23 +46,23 @@ const styles = {
     height: 'calc(-125px + 100vh)',
   },
   clinicianList: {
-    padding: '0px 25px',
+    padding: '0px 25px'
   },
 };
 
-
-
 export default function Layout() {
   const theme = useTheme();
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down('lg')
+  );
   const [open, setOpen] = useState(false);
   const [week, setWeek] = React.useState('');
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const [filterDrawerOpen, setFilterDrawerOpen] = React.useState(false);
-  const [newAppointmentOpen, setNewAppointmentOpen] = React.useState(false);
   const [calendarDrawerOpen, setCalendarDrawerOpen] = React.useState(false);
-  const [clinicianDrawerOpen, setClinicianDrawerOpen] = React.useState(false);
+  const [markAvailableOpen, setMarkAvailableOpen] = React.useState(false);
   const [activeView, setActiveView] = React.useState('calendar');
+  const [clinicianDrawerOpen, setClinicianDrawerOpen] = React.useState(false);
 
   const [events] = useState([
     {
@@ -78,9 +77,36 @@ export default function Layout() {
     },
   ]);
 
+  const demoAppointments = [
+    {
+      id: '1',
+      title: 'New Appointment',
+      startTime: '10:30 AM',
+      endTime: '11:30 AM'
+    },
+    {
+      id: '2',
+      title: 'Follow-up',
+      startTime: '11:30 AM',
+      endTime: '12:30 PM'
+    },
+    {
+      id: '3',
+      title: 'New Appointment',
+      startTime: '10:30 AM',
+      endTime: '11:30 AM'
+    },
+    {
+      id: '4',
+      title: 'Follow-up',
+      startTime: '11:30 AM',
+      endTime: '12:30 PM'
+    }
+  ];
+
   React.useEffect(() => {
     const handleToggleFilter = () => {
-      setFilterDrawerOpen(prev => !prev);
+      setFilterDrawerOpen((prev) => !prev);
     };
 
     window.addEventListener('toggleFilterDrawer', handleToggleFilter);
@@ -101,10 +127,6 @@ export default function Layout() {
     setFilterDrawerOpen(open);
   };
 
-  const toggleNewAppointment = (open: boolean) => () => {
-    setNewAppointmentOpen(open);
-  };
-  
 
   const handleCalendarClick = () => {
     setCalendarDrawerOpen(true);
@@ -118,8 +140,8 @@ export default function Layout() {
     setDrawerOpen(true);
   };
 
-  const handleNewAppointment = () => {
-    setNewAppointmentOpen(true);
+  const handleMarkAvailable = () => {
+    setMarkAvailableOpen(true);
   };
 
   const handleMenuItemClick = (index: number) => {
@@ -141,42 +163,58 @@ export default function Layout() {
   return (
     <Box sx={styles.container}>
       <CssBaseline />
-      <ClinicianSidemenu open={open} setOpen={setOpen} onMenuItemClick={handleMenuItemClick} />
+      <ClinicianSidemenu
+        open={open}
+        setOpen={setOpen}
+        onMenuItemClick={handleMenuItemClick}
+      />
       <Box component="main" sx={styles.main(theme)}>
-        <ClinicianHeader onNewAppointment={handleNewAppointment}/>
+        <ClinicianHeader onNewAppointment={handleMarkAvailable} />
         {activeView === 'calendar' && (
           <>
-            <CustomToolbar 
+            <CustomToolbar
               week={week}
               handleChange={handleChange}
               toggleDrawer={toggleDrawer}
               onCalendarClick={handleCalendarClick}
               onGroupClick={handleGroupClick}
-              
             />
-            
+
             <Box sx={{ display: 'flex', flexDirection: 'row' }}>
               {!isMobile && (
                 <Box sx={styles.sidebar}>
-                  <Box sx={{height:'336px'}}>
+                  <Box sx={{ height: '336px' }}>
                     <MiniCalendar />
                   </Box>
                   <Box sx={styles.clinicianList}>
-                    <PatientClinicianList />
+                  <UpcomingAppointment 
+                    appointments={demoAppointments}
+                  />
                   </Box>
                 </Box>
               )}
-              <Box sx={{ flex: '1 1 0%',width: '100%', height: isMobile ? 'calc(-270px + 100vh)' : 'calc(-125px + 100vh)'}}>
+              <Box
+                sx={{
+                  flex: '1 1 0%',
+                  width: '100%',
+                  height: isMobile
+                    ? 'calc(-270px + 100vh)'
+                    : 'calc(-125px + 100vh)',
+                }}
+              >
                 <WeekCalendar events={events} onEventClick={handleEventClick} />
               </Box>
-              
             </Box>
-            <Box className="resscreen_clinicianlist" sx={{display: isMobile ? 'block' : 'none',marginTop:'25px',}}>
-                <PatientClinicianList />
-              </Box>
+            <Box
+              className="resscreen_clinicianlist"
+              sx={{ display: isMobile ? 'block' : 'none', marginTop: '25px' }}
+            >
+               <UpcomingAppointment 
+                appointments={demoAppointments}
+              />
+            </Box>
           </>
         )}
-        {activeView === 'clinicians' && <Clinicians />}
         {activeView === 'billing' && <BillPayment />}
         {activeView === 'profile' && <Profile />}
       </Box>
@@ -187,10 +225,10 @@ export default function Layout() {
         onOpen={toggleDrawer(true)}
       />
 
-      <NewAppointments
-        open={newAppointmentOpen}
-        onClose={toggleNewAppointment(false)}
-        onOpen={toggleNewAppointment(true)}
+      <MarkAvailable
+        open={markAvailableOpen}
+        onClose={() => setMarkAvailableOpen(false)}
+        onOpen={() => setMarkAvailableOpen(true)}
       />
 
       <SwipeableDrawer
@@ -204,16 +242,6 @@ export default function Layout() {
         </Box>
       </SwipeableDrawer>
 
-      <SwipeableDrawer
-        anchor="bottom"
-        open={clinicianDrawerOpen}
-        onClose={() => setClinicianDrawerOpen(false)}
-        onOpen={() => setClinicianDrawerOpen(true)}
-      >
-        <Box sx={{ height: '50vh', padding: 2 }}>
-          <PatientClinicianList />
-        </Box>
-      </SwipeableDrawer>
     </Box>
   );
 }
