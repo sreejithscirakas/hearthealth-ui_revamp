@@ -198,7 +198,7 @@ export default function Layout() {
                   flex: '1 1 0%',
                   width: '100%',
                   height: isMobile
-                    ? 'calc(-270px + 100vh)'
+                    ? 'calc(-290px + 100vh)'
                     : 'calc(-125px + 100vh)',
                 }}
               >

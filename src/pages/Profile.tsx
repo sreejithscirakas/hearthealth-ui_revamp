@@ -7,9 +7,12 @@ import {
   Avatar,
   IconButton,
   Input,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 interface UserProfile {
   firstName: string;
@@ -29,6 +32,8 @@ const initialProfile: UserProfile = {
 };
 
 export default function Profile() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [profile, setProfile] = useState<UserProfile>(initialProfile);
   const [isEditing, setIsEditing] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string>('');
@@ -65,6 +70,10 @@ export default function Profile() {
     setIsEditing(false);
   };
 
+  const handleLogout = () => {
+    console.log('Logging out...');
+  };
+
   const getInitials = (firstName: string, lastName: string) => {
     return `${firstName[0]}${lastName[0]}`.toUpperCase();
   };
@@ -73,14 +82,35 @@ export default function Profile() {
     <Box
       sx={{
         padding: { xs: '10px 20px 60px 20px', md: '0px 25px' },
-        height: 'calc(100vh - 56px)',
+        height: 'calc(100vh - 58px)',
         overflowY: 'auto',
       }}
     >
-      <Box sx={{ mb: 3 }}>
-        <Typography variant="h6" sx={{ color: 'primary.main', mb: 2 }}>
+      <Box 
+        sx={{ 
+          mb: 3,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <Typography variant="h6" sx={{ color: 'primary.main' }}>
           My Profile
         </Typography>
+        {isMobile && (
+        <Button
+          variant="outlined"
+          color="error"
+          startIcon={<LogoutIcon />}
+          onClick={handleLogout}
+          sx={{ 
+            textTransform: 'none',
+            borderColor: 'error.main',
+          }}
+        >
+          Logout
+        </Button>
+        )}
       </Box>
 
       <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, mb: 4 }}>
@@ -93,9 +123,8 @@ export default function Profile() {
             variant="outlined"
             endIcon={<EditIcon />}
             onClick={() => setIsEditing(!isEditing)}
-            
           >
-          Edit
+            Edit
           </Button>
         </Typography>
       </Box>
@@ -283,4 +312,4 @@ export default function Profile() {
       </Box>
     </Box>
   );
-}
+} 

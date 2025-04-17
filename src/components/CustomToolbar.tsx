@@ -62,9 +62,14 @@ export default function CustomToolbar({ week, handleChange, toggleDrawer, onCale
           <IconButton size="small">
             <ChevronRight />
           </IconButton>
+          
           {!isMobile && (
-            <Typography variant="body1" noWrap>30 Mar - 5 Apr 2025</Typography>
-          )}
+            <Box component="span" sx={{ ml: 1 }}>
+              <Typography variant="body1" component="span" noWrap>
+                30 Mar - 5 Apr 2025
+              </Typography>
+            </Box>
+            )}
         </Box>
 
         <FormControl sx={{ margin: '0', padding: '0', minWidth: isMobile ? 'auto' : 120 }}>
@@ -97,10 +102,10 @@ export default function CustomToolbar({ week, handleChange, toggleDrawer, onCale
         </FormControl>
         <Box sx={{display:'flex',flexWrap: isMobile ? 'wrap': 'unset', alignItems:'center',gap:isMobile ?'5px':'10px', marginLeft:isMobile ?'10px':'0'}}>
         <Typography variant="body2" sx={{display:'flex',alignItems:'center',fontSize:'12px'}}>
-          <Box sx={{backgroundColor:'#0080002e',borderRadius:'2px',border:'solid 2px green',padding:'5px',marginRight:'5px'}}></Box> Available
+          <span style={{backgroundColor:'#0080002e',borderRadius:'2px',border:'solid 2px green',padding:'5px',marginRight:'5px'}}></span> Available
         </Typography>
         <Typography variant="body2" sx={{display:'flex',alignItems:'center',fontSize:'12px'}}>
-        <Box sx={{backgroundColor:'#ff000029',borderRadius:'2px',border:'solid 2px red',padding:'5px',marginRight:'5px'}}></Box> Not Available
+        <span style={{backgroundColor:'#ff000029',borderRadius:'2px',border:'solid 2px red',padding:'5px',marginRight:'5px'}}></span> Not Available
         </Typography>
       </Box>
       </Box>

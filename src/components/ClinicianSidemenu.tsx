@@ -13,14 +13,16 @@ import {
   BottomNavigationAction,
   useMediaQuery,
   Paper,
-  Fab
+  Fab,
 } from '@mui/material';
-import { ChevronLeft, ChevronRight, Add as AddIcon } from '@mui/icons-material';
+import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PaymentIcon from '@mui/icons-material/Payment';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useState } from 'react';
-import precisionHeartIcon from "../assets/favicon.png";
+import precisionHeartIcon from '../assets/favicon.png';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import MarkAvailable from './MarkAvailable';
 
 const drawerWidth = 240;
 
@@ -30,7 +32,9 @@ const Drawer = styled(MuiDrawer)(({ theme, open }) => ({
   whiteSpace: 'nowrap',
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
-    duration: open ? theme.transitions.duration.enteringScreen : theme.transitions.duration.leavingScreen,
+    duration: open
+      ? theme.transitions.duration.enteringScreen
+      : theme.transitions.duration.leavingScreen,
   }),
   '& .MuiDrawer-paper': {
     width: open ? drawerWidth : `calc(${theme.spacing(7)} + 1px)`,
@@ -60,43 +64,55 @@ const menuItems = [
   { text: 'Profile', mobileText: 'Profile', icon: <AccountCircleIcon /> },
 ];
 
-export default function Sidemenu({ open, setOpen, onMenuItemClick }: SidemenuProps) {
+export default function Sidemenu({
+  open,
+  setOpen,
+  onMenuItemClick,
+}: SidemenuProps) {
   const theme = useTheme();
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down('md')
+  );
   const [activeIndex, setActiveIndex] = useState(0);
+  const [markAvailableOpen, setMarkAvailableOpen] = useState(false);
 
   const handleItemClick = (index: number) => {
     setActiveIndex(index);
     onMenuItemClick(index);
   };
 
+  const handleMarkAvailable = () => {
+    setMarkAvailableOpen(true);
+  };
+
   if (isMobile) {
     return (
       <>
-        <Fab 
+        <Fab
           color="primary"
           aria-label="add"
+          onClick={handleMarkAvailable}
           sx={{
             position: 'fixed',
             bottom: 50,
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 1100,
-            width:'50px',
-            height:'50px'
+            width: '50px',
+            height: '50px',
           }}
         >
-          <AddIcon />
+          <EventAvailableIcon />
         </Fab>
-        <Paper 
-          sx={{ 
-            position: 'fixed', 
-            bottom: 0, 
-            left: 0, 
+        <Paper
+          sx={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
             right: 0,
             zIndex: 1000,
-            borderTop: '1px solid rgba(0, 0, 0, 0.12)'
-          }} 
+            borderTop: '1px solid rgba(0, 0, 0, 0.12)',
+          }}
           elevation={3}
         >
           <BottomNavigation
@@ -137,6 +153,12 @@ export default function Sidemenu({ open, setOpen, onMenuItemClick }: SidemenuPro
             ))}
           </BottomNavigation>
         </Paper>
+
+        <MarkAvailable
+          open={markAvailableOpen}
+          onClose={() => setMarkAvailableOpen(false)}
+          onOpen={() => setMarkAvailableOpen(true)}
+        />
       </>
     );
   }
@@ -145,22 +167,26 @@ export default function Sidemenu({ open, setOpen, onMenuItemClick }: SidemenuPro
     <Drawer variant="permanent" open={open}>
       <DrawerHeader>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <img src={precisionHeartIcon} alt="Logo" style={{ height: '40px', marginRight: '8px' }} />
-          <Typography 
-            variant="h6" 
+          <img
+            src={precisionHeartIcon}
+            alt="Logo"
+            style={{ height: '40px', marginRight: '8px' }}
+          />
+          <Typography
+            variant="h6"
             noWrap
-            sx={{ 
-              display: open ? 'block' : 'none', 
+            sx={{
+              display: open ? 'block' : 'none',
               color: 'primary.main',
-              fontWeight: 600 
+              fontWeight: 600,
             }}
           >
             Precision-Heart
           </Typography>
         </Box>
-        <IconButton 
-          onClick={() => setOpen(!open)} 
-          sx={{ 
+        <IconButton
+          onClick={() => setOpen(!open)}
+          sx={{
             position: 'absolute',
             right: '-24px',
             top: '0px',
@@ -181,35 +207,41 @@ export default function Sidemenu({ open, setOpen, onMenuItemClick }: SidemenuPro
           {open ? <ChevronLeft /> : <ChevronRight />}
         </IconButton>
       </DrawerHeader>
-      
+
       <List>
         {menuItems.map((item, index) => (
           <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton 
+            <ListItemButton
               onClick={() => handleItemClick(index)}
-              sx={{ 
+              sx={{
                 justifyContent: open ? 'initial' : 'center',
-                backgroundColor: activeIndex === index ? theme.palette.primary.main : 'transparent',
+                backgroundColor:
+                  activeIndex === index
+                    ? theme.palette.primary.main
+                    : 'transparent',
                 '&:hover': {
-                  backgroundColor: activeIndex === index ? theme.palette.primary.dark : 'rgba(0, 0, 0, 0.04)',
+                  backgroundColor:
+                    activeIndex === index
+                      ? theme.palette.primary.dark
+                      : 'rgba(0, 0, 0, 0.04)',
                 },
               }}
             >
-              <ListItemIcon 
-                sx={{ 
-                  justifyContent: 'center', 
-                  mr: open ? 0 : 'auto', 
-                  color: activeIndex === index ? 'white' : 'black'
+              <ListItemIcon
+                sx={{
+                  justifyContent: 'center',
+                  mr: open ? 0 : 'auto',
+                  color: activeIndex === index ? 'white' : 'black',
                 }}
               >
                 {item.icon}
               </ListItemIcon>
-              <ListItemText 
-                primary={item.text} 
-                sx={{ 
-                  opacity: open ? 1 : 0, 
-                  color: activeIndex === index ? 'white' : 'black'
-                }} 
+              <ListItemText
+                primary={item.text}
+                sx={{
+                  opacity: open ? 1 : 0,
+                  color: activeIndex === index ? 'white' : 'black',
+                }}
               />
             </ListItemButton>
           </ListItem>

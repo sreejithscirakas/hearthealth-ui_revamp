@@ -19,7 +19,7 @@ import {
   Logout as LogoutIcon,
 } from '@mui/icons-material';
 import { useState } from 'react';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 
 const styles = {
   appBar: {
@@ -91,7 +91,7 @@ export default function Header({ onNewAppointment }: HeaderProps) {
           aria-label="Mark Available"
           onClick={onNewAppointment}
         >
-          <AccessTimeIcon sx={{marginRight:'3px'}}/> Mark Available
+          <EventAvailableIcon sx={{marginRight:'3px'}}/> Mark Available
         </Button>
 
         <Box
