@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Box,
   Container,
@@ -9,43 +9,31 @@ import {
   FormControl,
   InputLabel,
   Select,
-} from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
-import { useNavigate } from 'react-router-dom';
-import Grid from '@mui/material/Grid2';
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useNavigate } from "react-router-dom";
+import Grid from "@mui/material/Grid2";
+import precisionHeartIcon from "../../assets/favicon.png";
 
-const doctors = [
-  { id: 1, name: 'Dr. Sarah Johnson', specialty: 'Cardiologist' },
-  { id: 2, name: 'Dr. Michael Chen', specialty: 'Heart Surgeon' },
-  { id: 3, name: 'Dr. Emily Brown', specialty: 'Cardiologist' },
-];
-
-const genders = ['Male', 'Female', 'Other', 'Prefer not to say'];
+const genders = ["Male", "Female", "Other", "Prefer not to say"];
 
 export default function PatientGetin() {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    firstName: "",
+    lastName: "",
     dob: null,
-    age: '',
-    gender: '',
-    email: '',
-    phone: '',
-    gp1Name: '',
-    gp1Email: '',
-    gp1Phone: '',
-    gp2Name: '',
-    gp2Email: '',
-    gp2Phone: '',
-    story: '',
-    preferredDate: null,
-    preferredTime: null,
-    preferredDoctor: '',
+    age: "",
+    gender: "",
+    email: "",
+    phone: "",
+    story: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -55,304 +43,261 @@ export default function PatientGetin() {
       ...formData,
       [field]: event.target.value,
     });
-    // Clear error when user types
     if (errors[field as keyof typeof errors]) {
       setErrors({
         ...errors,
-        [field]: '',
+        [field]: "",
       });
     }
   };
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    // Add validation logic here
     console.log(formData);
-    navigate('/dashboard');
-  };
-
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      // Handle file upload
-      console.log('File selected:', file.name);
-    }
+    navigate("/dashboard");
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        backgroundColor: "#ecf9fc",
+        position: "relative",
+        overflow: "hidden",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
       <Box
         sx={{
-          minHeight: '100vh',
-          backgroundColor: '#f8f9ff',
-          py: 4,
-          position: 'relative',
-          overflow: 'hidden',
+          position: "absolute",
+          left: -100,
+          top: -100,
+          width: 300,
+          height: 300,
+          borderRadius: "50%",
+          background: 'linear-gradient(135deg,rgba(255, 15, 123, 1) 0%, rgba(255, 255, 255, 1) 100%)',
+          opacity: 0.2,
         }}
-      >
-        {/* Background decorative elements */}
+      ></Box>
+      <Box
+        sx={{
+          position: "absolute",
+          right: -100,
+          bottom: -100,
+          width: 400,
+          height: 400,
+          borderRadius: "50%",
+          background: 'linear-gradient(135deg,rgba(255, 255, 255, 1) 0%, rgba(255, 15, 123, 1) 100%)',
+          opacity: 0.1,
+        }}
+      ></Box>
+      {!isMobile && (
+        <a href="https://hearthealth.ahimsa.global/" style={{ textDecoration: 'none' }}>
         <Box
           sx={{
-            position: 'absolute',
-            left: -100,
-            top: -100,
-            width: 300,
-            height: 300,
-            borderRadius: '50%',
-            background: 'linear-gradient(135deg, #b794f4 0%, #9f7aea 100%)',
-            opacity: 0.2,
+            position: "absolute",
+            left: 50,
+            top: 50,
           }}
-        />
-        <Box
+        >
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box
+              component="img"
+              src={precisionHeartIcon}
+              alt="Logo"
+              sx={{ width: 40, height: 40, mr: 1 }}
+            ></Box>
+            <Typography
+              variant="h5"
+              sx={{
+                color: "primary.main",
+                fontWeight: 600,
+              }}
+            >
+              Precision-Heart
+            </Typography>
+          </Box>
+        </Box>
+        </a>
+      )}
+      <Container maxWidth="md"
+      sx={{
+        border: '1px solid rgba(0, 0, 0, 0.12)',
+        margin: '0 auto',
+        padding: '48px',
+        borderRadius: '8px',
+        backgroundColor: '#FFFFFF'
+      }}>
+        {isMobile && (
+          <a href="https://hearthealth.ahimsa.global/" style={{ textDecoration: 'none' }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              mb: 4,
+              mt: 4,
+            }}
+          >
+            <Box
+              component="img"
+              src={precisionHeartIcon}
+              alt="Logo"
+              sx={{ width: 40, height: 40, mr: 1 }}
+            ></Box>
+            <Typography
+              variant="h5"
+              sx={{
+                color: "primary.main",
+                fontWeight: 600,
+              }}
+            >
+              Precision-Heart
+            </Typography>
+          </Box>
+          </a>
+        )}
+        <Typography
+          variant="h4"
           sx={{
-            position: 'absolute',
-            right: -100,
-            bottom: -100,
-            width: 400,
-            height: 400,
-            borderRadius: '50%',
-            background: 'linear-gradient(135deg, #b794f4 0%, #9f7aea 100%)',
-            opacity: 0.1,
+            mb: 4,
+            color: "#2d3748",
+            fontWeight: "600",
+            fontSize: isMobile ? "18px" : "30px",
           }}
-        />
+        >
+          Please fill your basic info
+        </Typography>
 
-        <Container maxWidth="md">
-          <Typography variant="h4" sx={{ mb: 4, color: '#ff1493', fontWeight: 700 }}>
-            Please fill your basic info
-          </Typography>
+        <Box component="form" onSubmit={handleSubmit}>
+          <Grid container spacing={3}>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <TextField
+                fullWidth
+                label="First Name"
+                required
+                value={formData.firstName}
+                onChange={handleChange("firstName")}
+              />
+            </Grid>
 
-          <Box component="form" onSubmit={handleSubmit}>
-            <Grid container spacing={3}>
-              <Grid size={{ xs: 12, sm:6 }}>
-                <TextField
-                  fullWidth
-                  label="First Name"
-                  required
-                  value={formData.firstName}
-                  onChange={handleChange('firstName')}
-                  
-                />
-              </Grid>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <TextField
+                fullWidth
+                label="Last Name"
+                value={formData.lastName}
+                onChange={handleChange("lastName")}
+              />
+            </Grid>
 
-              <Grid size={{ xs: 12, sm:6 }}>
-                <TextField
-                  fullWidth
-                  label="Last Name"
-                  value={formData.lastName}
-                  onChange={handleChange('lastName')}
-                />
-              </Grid>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                gap={2}
+              >
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="DOB"
+                    value={formData.dob}
+                    onChange={(newValue) =>
+                      handleChange("dob")({ target: { value: newValue } })
+                    }
+                    sx={{ width: "100%" }}
+                  />
+                </LocalizationProvider>
+                <Typography
+                  variant="body1"
+                  sx={{ fontWeight: "bold", color: "primary.main" }}
+                >
+                  OR
+                </Typography>
 
-              <Grid size={{ xs: 12, sm:6 }}>
-                <DatePicker
-                  label="Date of Birth"
-                  value={formData.dob}
-                  onChange={(newValue) => handleChange('dob')({ target: { value: newValue } })}
-                  sx={{ width: '100%' }}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, sm:6 }}>
                 <TextField
                   fullWidth
                   label="Age"
                   value={formData.age}
-                  onChange={handleChange('age')}
+                  onChange={handleChange("age")}
                 />
-              </Grid>
-
-              <Grid size={{ xs: 12, sm:6 }}>
-                <FormControl fullWidth required>
-                  <InputLabel>Gender</InputLabel>
-                  <Select
-                    value={formData.gender}
-                    label="Gender"
-                    onChange={handleChange('gender')}
-                  >
-                    {genders.map((gender) => (
-                      <MenuItem key={gender} value={gender}>
-                        {gender}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-
-              <Grid size={{ xs: 12, sm:6 }}>
-                <TextField
-                  fullWidth
-                  label="Email"
-                  required
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange('email')}
-                  
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, sm:6 }}>
-                <TextField
-                  fullWidth
-                  label="Phone"
-                  value={formData.phone}
-                  onChange={handleChange('phone')}
-                  helperText="Format: +1234567890"
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12 }}>
-                <Typography variant="h6" sx={{ mb: 2, mt: 2 }}>
-                  General practitioner
-                </Typography>
-              </Grid>
-
-              <Grid size={{ xs: 12, sm:4 }}>
-                <TextField
-                  fullWidth
-                  label="Name"
-                  value={formData.gp1Name}
-                  onChange={handleChange('gp1Name')}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, sm:4 }}>
-                <TextField
-                  fullWidth
-                  label="Email"
-                  value={formData.gp1Email}
-                  onChange={handleChange('gp1Email')}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, sm:4 }}>
-                <TextField
-                  fullWidth
-                  label="Phone"
-                  value={formData.gp1Phone}
-                  onChange={handleChange('gp1Phone')}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12 }}>
-                <Typography variant="h6" sx={{ mb: 2, mt: 2 }}>
-                  Additional practitioner (optional)
-                </Typography>
-              </Grid>
-
-              <Grid size={{ xs: 12, sm:4 }}>
-                <TextField
-                  fullWidth
-                  label="Name"
-                  value={formData.gp2Name}
-                  onChange={handleChange('gp2Name')}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, sm:4 }}>
-                <TextField
-                  fullWidth
-                  label="Email"
-                  value={formData.gp2Email}
-                  onChange={handleChange('gp2Email')}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, sm:4 }}>
-                <TextField
-                  fullWidth
-                  label="Phone"
-                  value={formData.gp2Phone}
-                  onChange={handleChange('gp2Phone')}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12 }}>
-                <TextField
-                  fullWidth
-                  label="Questions / Story"
-                  multiline
-                  rows={4}
-                  value={formData.story}
-                  onChange={handleChange('story')}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12 }}>
-                <Typography variant="subtitle1" sx={{ mb: 2 }}>
-                  Do you wish to speak with a heart health specialist?
-                </Typography>
-              </Grid>
-
-              <Grid size={{ xs: 12, sm:4 }}>
-                <DatePicker
-                  label="Preferred Date"
-                  value={formData.preferredDate}
-                  onChange={(newValue) => handleChange('preferredDate')({ target: { value: newValue } })}
-                  sx={{ width: '100%' }}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, sm:4 }}>
-                <TimePicker
-                  label="Preferred Time"
-                  value={formData.preferredTime}
-                  onChange={(newValue) => handleChange('preferredTime')({ target: { value: newValue } })}
-                  sx={{ width: '100%' }}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, sm:4 }}>
-                <FormControl fullWidth>
-                  <InputLabel>Preferred Doctor</InputLabel>
-                  <Select
-                    value={formData.preferredDoctor}
-                    label="Preferred Doctor"
-                    onChange={handleChange('preferredDoctor')}
-                  >
-                    {doctors.map((doctor) => (
-                      <MenuItem key={doctor.id} value={doctor.id}>
-                        {doctor.name} - {doctor.specialty}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-
-              <Grid size={{ xs: 12 }}>
-                <Button
-                  component="label"
-                  variant="outlined"
-                  startIcon={<FileUploadRoundedIcon />}
-                  sx={{ textTransform: 'none' }}
-                >
-                  Upload File (Optional)
-                  <input
-                    type="file"
-                    hidden
-                    onChange={handleFileUpload}
-                  />
-                </Button>
-              </Grid>
-
-              <Grid size={{ xs: 12 }}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  fullWidth
-                  sx={{
-                    mt: 2,
-                    bgcolor: '#ff1493',
-                    height: '48px',
-                    '&:hover': { bgcolor: '#ff1493dd' }
-                  }}
-                >
-                  Submit
-                </Button>
-              </Grid>
+              </Box>
             </Grid>
-          </Box>
-        </Container>
-      </Box>
-    </LocalizationProvider>
+
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <FormControl fullWidth required>
+                <InputLabel>Gender</InputLabel>
+                <Select
+                  value={formData.gender}
+                  label="Gender"
+                  onChange={handleChange("gender")}
+                >
+                  {genders.map((gender) => (
+                    <MenuItem key={gender} value={gender}>
+                      {gender}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <TextField
+                fullWidth
+                label="Email"
+                required
+                type="email"
+                value={formData.email}
+                onChange={handleChange("email")}
+              />
+            </Grid>
+
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <TextField
+                fullWidth
+                label="Phone"
+                value={formData.phone}
+                onChange={handleChange("phone")}
+                helperText="Format: +1234567890"
+              />
+            </Grid>
+
+            <Grid size={{ xs: 12 }}>
+              <TextField
+                fullWidth
+                label="Questions / Story"
+                multiline
+                rows={4}
+                value={formData.story}
+                onChange={handleChange("story")}
+              />
+            </Grid>
+
+            <Grid size={{ xs: 12 }}>
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  mt: 2,
+                  bgcolor: "primary.main",
+                }}
+              >
+                Submit
+              </Button>
+              <Button
+                type="submit"
+                variant="outlined"
+                sx={{
+                  mt: 2,
+                  ml: 2,
+                }}
+              >
+                Cancel
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
+      </Container>
+    </Box>
   );
 }

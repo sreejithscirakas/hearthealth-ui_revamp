@@ -10,7 +10,7 @@ import {
   InputAdornment,
   useMediaQuery,
   useTheme,
-  Stack,
+  Stack
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -146,13 +146,20 @@ export default function Login() {
                 noValidate
                 autoComplete="off"
               >
+
             <TextField
-              fullWidth
-              label="Username"
-              variant="outlined"
-              autoComplete="off"
-              sx={{ mb: 2 }}
-            />
+            fullWidth
+            variant="outlined"
+          label="Username"
+          defaultValue="Username"
+          autoComplete="off"
+          slotProps={{
+            input: {
+              readOnly: true,
+            },
+          }}
+          sx={{ mb: 2 }}
+        />
 
             <TextField
               fullWidth
@@ -170,31 +177,46 @@ export default function Login() {
               }}
               sx={{ mb: 3 }}
             />
-
-            <Link
-              component="button"
-              variant="body2"
-              onClick={() => navigate("/forgetpassword")}
-              sx={{
-                mb: 3,
-                display: "block",
-                textAlign: "left",
-                color: "primary.main",
+            <TextField
+              fullWidth
+              label="Confirm Password"
+              autoComplete="off"
+              type={showPassword ? "text" : "password"}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowPassword(!showPassword)}>
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
-            >
-              Forgot password?
-            </Link>
+              sx={{ mb: 3 }}
+            />
 
             <Button
               fullWidth
               variant="contained"
               sx={{
                 bgcolor: "primary.main",
+                mb:4
               }}
               onClick={() => navigate("/user-type")}
             >
-              Log in
+              Signup
             </Button>
+
+            <Typography variant="body2" align="center" sx={{ color: '#718096' }}>
+              Already have an account?{' '}
+              <Link
+                component="button"
+                variant="body2"
+                onClick={() => navigate('/login')}
+                sx={{ color: 'primary.main' }}
+              >
+                Log in
+              </Link>
+            </Typography>
             </Stack>
           </Box>
         </Box>

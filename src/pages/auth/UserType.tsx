@@ -1,34 +1,40 @@
-import { Box, Container, Typography, Card, CardContent, CardActionArea } from '@mui/material';
+import { Box, Container, Typography, Card, CardContent, CardActionArea,  useMediaQuery,
+  useTheme, } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight } from '@mui/icons-material';
 import precisionHeartIcon from '../../assets/favicon.png';
+import Practitioner from '../../assets/pm.webp';
+import Clinician from '../../assets/clinician1.webp';
+import Patient from '../../assets/patient.webp';
+import Others from '../../assets/others.webp';
 
 export default function UserType() {
   const navigate = useNavigate();
-
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const userTypes = [
     {
       title: 'For practitioners',
       description: 'Manage and grow your practice',
-      image: 'https://media.istockphoto.com/id/1215265825/photo/analyzing-medical-notes.jpg?s=612x612&w=0&k=20&c=yb5JEW0FzwDuc8fKBVE9AXkosXoiG7n_xPpkcYuph7w=',
+      image: Practitioner,
       path: '/others-getin'
     },
     {
       title: 'For doctors',
       description: 'Provide medical care and consultations',
-      image: 'https://www.vmcdn.ca/f/files/shared/health/nurse-adobestock_320982994.jpeg;w=960',
+      image: Clinician,
       path: '/others-getin'
     },
     {
       title: 'For patient',
       description: 'I receive care or health related services',
-      image: 'https://images.unsplash.com/photo-1494774157365-9e04c6720e47?q=80&w=200&auto=format&fit=crop',
+      image: Patient,
       path: '/patient-getin'
     },
     {
       title: 'Others',
-      description: 'I receive care or health related services',
-      image: 'https://cdn-icons-png.flaticon.com/512/9596/9596156.png',
+      description: 'Engage in diverse healthcare roles',
+      image: Others,
       path: '/others-getin'
     }
   ];
@@ -40,10 +46,10 @@ export default function UserType() {
         display: 'flex',
         backgroundColor: '#ecf9fc',
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        alignItems: "center",
       }}
     >
-      {/* Background circles */}
       <Box
         sx={{
           position: 'absolute',
@@ -52,10 +58,10 @@ export default function UserType() {
           width: 300,
           height: 300,
           borderRadius: '50%',
-          background: 'linear-gradient(135deg, #b794f4 0%, #9f7aea 100%)',
+          background: 'linear-gradient(135deg,rgba(255, 15, 123, 1) 0%, rgba(255, 255, 255, 1) 100%)',
           opacity: 0.2,
         }}
-      />
+      ></Box>
       <Box
         sx={{
           position: 'absolute',
@@ -64,48 +70,77 @@ export default function UserType() {
           width: 400,
           height: 400,
           borderRadius: '50%',
-          background: 'linear-gradient(135deg, #b794f4 0%, #9f7aea 100%)',
+          background: 'linear-gradient(135deg,rgba(255, 255, 255, 1) 0%, rgba(255, 15, 123, 1) 100%)',
           opacity: 0.1,
         }}
-      />
-      <Box
-        sx={{
-          position: 'absolute',
-          right: '10%',
-          top: '20%',
-          width: 200,
-          height: 200,
-          background: 'repeating-linear-gradient(45deg, #b794f4 0%, transparent 2px)',
-          opacity: 0.1,
-        }}
-      />
-
-      <Container maxWidth="lg">
+      ></Box>
+      {!isMobile && (
+        <a href="https://hearthealth.ahimsa.global/" style={{ textDecoration: 'none' }}>
         <Box
           sx={{
-            mt: 8,
+            position: "absolute",
+            left: 50,
+            top: 50,
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box
+              component="img"
+              src={precisionHeartIcon}
+              alt="Logo"
+              sx={{ width: 40, height: 40, mr: 1 }}
+            ></Box>
+            <Typography
+              variant="h5"
+              sx={{
+                color: "primary.main",
+                fontWeight: 600,
+              }}
+            >
+              Precision-Heart
+            </Typography>
+          </Box>
+        </Box>
+        </a>
+      )}
+
+      <Container maxWidth="lg">
+      {isMobile && (
+        <a href="https://hearthealth.ahimsa.global/" style={{ textDecoration: 'none' }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              mb: 4,
+              mt: 4,
+            }}
+          >
+            <Box
+              component="img"
+              src={precisionHeartIcon}
+              alt="Logo"
+              sx={{ width: 40, height: 40, mr: 1 }}
+            ></Box>
+            <Typography
+              variant="h5"
+              sx={{
+                color: "primary.main",
+                fontWeight: 600,
+              }}
+            >
+              Precision-Heart
+            </Typography>
+          </Box>
+          </a>
+        )}
+        <Box
+          sx={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
-            <Box
-              component="img"
-              src={precisionHeartIcon}
-              alt="Logo"
-              sx={{ width: 40, height: 40, borderRadius: '8px', mr: 1 }}
-            />
-            <Typography variant="h5" 
-            sx={{ 
-                color: 'primary.main',
-                fontWeight: 600, 
-                }}
-            >
-            Precision-Heart
-            </Typography>
-          </Box>
-
           <Typography variant="h4" sx={{ mb: 4, color: '#2d3748', fontWeight: 700 }}>
             Which describes you best?
           </Typography>
@@ -113,7 +148,7 @@ export default function UserType() {
           <Box
             sx={{
               display: 'grid',
-              gridTemplateColumns: { xs: '1fr', md: 'repeat(4, 1fr)' },
+              gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' },
               gap: 3,
               width: '100%',
             }}
@@ -134,6 +169,7 @@ export default function UserType() {
                   sx={{ height: '100%' }}
                 >
                   <CardContent sx={{ height: '100%', p: 3 }}>
+                  {!isMobile && (
                     <Box
                       component="img"
                       src={type.image}
@@ -143,9 +179,10 @@ export default function UserType() {
                         height: 200,
                         objectFit: 'cover',
                         borderRadius: 2,
-                        mb: 2
+                        mb: 2,
                       }}
-                    />
+                    ></Box>
+                  )}
                     <Typography variant="h6" sx={{ mb: 1, color: '#2d3748' }}>
                       {type.title}
                     </Typography>
