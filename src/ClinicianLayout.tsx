@@ -77,7 +77,7 @@ export default function Layout() {
     },
   ]);
 
-  const demoAppointments = [
+  const UpcomingAppointments = [
     {
       id: '1',
       title: 'New Appointment',
@@ -188,7 +188,7 @@ export default function Layout() {
                   </Box>
                   <Box sx={styles.clinicianList}>
                   <UpcomingAppointment 
-                    appointments={demoAppointments}
+                    appointments={UpcomingAppointments}
                   />
                   </Box>
                 </Box>
@@ -210,8 +210,8 @@ export default function Layout() {
               sx={{ display: isMobile ? 'block' : 'none', marginTop: '25px' }}
             >
                <UpcomingAppointment 
-                appointments={demoAppointments}
-              />
+                    appointments={UpcomingAppointments}
+                  />
             </Box>
           </>
         )}

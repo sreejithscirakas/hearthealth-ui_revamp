@@ -11,7 +11,7 @@ import App from './App';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
-      <App />
+      <Layout />
     </ThemeProvider>
   </StrictMode>,
 )

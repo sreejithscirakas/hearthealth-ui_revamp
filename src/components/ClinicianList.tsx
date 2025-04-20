@@ -31,33 +31,33 @@ const doctors = [
 
 const ClinicianList = () => {
   const isMobile = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down('lg')
+    theme.breakpoints.down('md')
   );
 
   return (
     <Box>
-      <Typography
+      {/* <Typography
         variant="body1"
         sx={{
           display: 'flex',
           alignItems: 'center',
           marginBottom: 0,
-          color: 'green',
           whiteSpace: 'nowrap',
         }}
       >
-        <CircleIcon sx={{ fontSize: '12px', marginRight: '5px' }} /> Available
+         
         Clinicians
-      </Typography>
+      </Typography>*/}
       <List
         dense
         sx={{
           display: isMobile ? 'flex' : 'block',
           width: isMobile ? '100%' : '100%',
-          height: isMobile ? 'auto' : 'calc(100vh - 505px)',
+          height: isMobile ? 'auto' : 'auto',
           overflowY: isMobile ? 'hidden' : 'auto',
           overflowX: isMobile ? 'auto' : 'hidden',
           bgcolor: 'background.paper',
+          padding:0,
           '&::-webkit-scrollbar': {
             height: '4px',
           },
@@ -78,6 +78,8 @@ const ClinicianList = () => {
               sx={{
                 width: isMobile ? 'auto' : '100%',
                 minWidth: isMobile ? '200px' : 'auto',
+                paddingLeft:0,
+                paddingRight:0
               }}
             >
               <ListItemButton>

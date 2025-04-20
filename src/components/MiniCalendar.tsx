@@ -6,7 +6,7 @@ export default function MiniCalendar() {
   return (
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DateCalendar
-        sx={{ bgcolor: 'background.default', borderRadius: 2 }} // Custom styles
+        
       />
       </LocalizationProvider>
   );

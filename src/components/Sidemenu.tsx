@@ -24,7 +24,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import { useState } from 'react';
 import precisionHeartIcon from "../assets/favicon.png";
 
-const drawerWidth = 240;
+const drawerWidth = 226;
 
 const Drawer = styled(MuiDrawer)(({ theme, open }) => ({
   width: open ? drawerWidth : `calc(${theme.spacing(7)} + 1px)`,

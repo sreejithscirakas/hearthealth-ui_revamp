@@ -30,6 +30,8 @@ import Grid from "@mui/material/Grid2";
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import AudioFileIcon from '@mui/icons-material/AudioFile';
+import Transcription from './Transcription';
+import Summary from './Summary';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -452,18 +454,24 @@ export default function AppointmentDrawer({ open, onClose, onOpen }: Appointment
         </TabPanel>
 
         <TabPanel value={tabValue} index={1}>
-          <Box sx={{ padding: '0 20px' }}>
+          <Box sx={{ padding: '0 20px',display:'none' }}>
             <Typography variant="body1" color="text.secondary" align="center">
               No transcription available
             </Typography>
           </Box>
+          <Box sx={{ padding: '0 0px',height:'calc(100vh - 235px)', overflowY:'auto' }}>
+            <Transcription/>
+          </Box>
         </TabPanel>
 
         <TabPanel value={tabValue} index={2}>
-          <Box sx={{ padding: '0 20px' }}>
+          <Box sx={{ padding: '0 20px', display:'none'}}>
             <Typography variant="body1" color="text.secondary" align="center">
               No summary available
             </Typography>
+          </Box>
+          <Box sx={{ padding: '0 0px',height:'calc(100vh - 235px)', overflowY:'auto' }}>
+            <Summary/>
           </Box>
         </TabPanel>
       </Box>

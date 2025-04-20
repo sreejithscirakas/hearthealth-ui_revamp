@@ -25,12 +25,12 @@ export default function UpcomingAppointment({
 
   return (
     <Box>
-      <Typography
+      {/*<Typography
         variant="body1"
         sx={{ mb: 2, fontWeight: 500 }}
       >
         Upcoming appointments
-      </Typography>
+      </Typography>*/}
 
       <Box
         sx={{

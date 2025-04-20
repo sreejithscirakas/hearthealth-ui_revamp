@@ -72,7 +72,7 @@ export default function CustomToolbar({ week, handleChange, toggleDrawer, onCale
             )}
         </Box>
 
-        <FormControl sx={{ margin: '0', padding: '0', minWidth: isMobile ? 'auto' : 120 }}>
+        <FormControl sx={{ margin: '0', padding: '0', minWidth: isMobile ? 'auto' : 'auto' }}>
           <Select
             value={week || (isMobile ? 'today' : 'week')}
             onChange={handleChange}
@@ -105,7 +105,7 @@ export default function CustomToolbar({ week, handleChange, toggleDrawer, onCale
           <span style={{backgroundColor:'#0080002e',borderRadius:'2px',border:'solid 2px green',padding:'5px',marginRight:'5px'}}></span> Available
         </Typography>
         <Typography variant="body2" sx={{display:'flex',alignItems:'center',fontSize:'12px'}}>
-        <span style={{backgroundColor:'#ff000029',borderRadius:'2px',border:'solid 2px red',padding:'5px',marginRight:'5px'}}></span> Not Available
+        <span style={{backgroundColor:'#fff',borderRadius:'2px',border:'solid 2px #ccc',padding:'5px',marginRight:'5px'}}></span> Not Available
         </Typography>
       </Box>
       </Box>
