@@ -14,10 +14,10 @@ export default function UserType() {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const userTypes = [
     {
-      title: 'For practitioners',
-      description: 'Manage and grow your practice',
-      image: Practitioner,
-      path: '/others-getin'
+      title: 'For patient',
+      description: 'I receive care or health related services',
+      image: Patient,
+      path: '/patient-getin'
     },
     {
       title: 'For doctors',
@@ -26,10 +26,10 @@ export default function UserType() {
       path: '/others-getin'
     },
     {
-      title: 'For patient',
-      description: 'I receive care or health related services',
-      image: Patient,
-      path: '/patient-getin'
+      title: 'For GP',
+      description: 'Manage and grow your practice',
+      image: Practitioner,
+      path: '/others-getin'
     },
     {
       title: 'Others',
