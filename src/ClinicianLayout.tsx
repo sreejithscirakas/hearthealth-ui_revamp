@@ -5,6 +5,7 @@ import {
   CssBaseline,
   SwipeableDrawer,
   useMediaQuery,
+  Typography
 } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material/Select';
 
@@ -198,7 +199,7 @@ export default function Layout() {
                   flex: '1 1 0%',
                   width: '100%',
                   height: isMobile
-                    ? 'calc(-290px + 100vh)'
+                    ? 'calc(-350px + 100vh)'
                     : 'calc(-125px + 100vh)',
                 }}
               >
@@ -209,6 +210,7 @@ export default function Layout() {
               className="resscreen_clinicianlist"
               sx={{ display: isMobile ? 'block' : 'none', marginTop: '25px' }}
             >
+              <Typography variant="subtitle1">Upcoming Appointments</Typography>
                <UpcomingAppointment 
                     appointments={UpcomingAppointments}
                   />

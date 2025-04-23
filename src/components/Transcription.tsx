@@ -95,13 +95,6 @@ export default function EnhancedTranscriptUI() {
         <Box sx={{ display: 'flex', gap: 2 }}>
           <Button
             variant="outlined"
-            startIcon={<EditIcon />}
-            onClick={() => setEditMode(!editMode)}
-          >
-            {editMode ? 'Stop Editing' : 'Edit'}
-          </Button>
-          <Button
-            variant="outlined"
             startIcon={<ShareIcon />}
             onClick={() => setDialogOpen(true)}
           >
