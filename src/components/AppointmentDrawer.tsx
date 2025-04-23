@@ -249,7 +249,7 @@ export default function AppointmentDrawer({ open, onClose, onOpen }: Appointment
         </Box>
 
         <TabPanel value={tabValue} index={0}>
-          <Box sx={{ padding: '0 20px',height:'calc(100vh - 235px)', overflowY:'auto' }}>
+          <Box sx={{ padding: '0 20px', height:isMobile? 'calc(100vh - 300px)':'calc(100vh - 235px)', overflowY:'auto' }}>
             <Box sx={{ display:'flex',justifyContent:'flex-end', mb: 2 }}>
               <Typography variant="subtitle1" sx={{ display: 'flex', alignItems: 'center', marginBottom: 0 }}>
                 Appointment Status:
@@ -459,7 +459,7 @@ export default function AppointmentDrawer({ open, onClose, onOpen }: Appointment
               No transcription available
             </Typography>
           </Box>
-          <Box sx={{ padding: '0 0px',height:'calc(100vh - 235px)', overflowY:'auto' }}>
+          <Box sx={{ padding: '0 0px',height:isMobile? 'calc(100vh - 300px)':'calc(100vh - 235px)', overflowY:'auto' }}>
             <Transcription/>
           </Box>
         </TabPanel>
@@ -470,7 +470,7 @@ export default function AppointmentDrawer({ open, onClose, onOpen }: Appointment
               No summary available
             </Typography>
           </Box>
-          <Box sx={{ padding: '0 0px',height:'calc(100vh - 235px)', overflowY:'auto' }}>
+          <Box sx={{ padding: '0 0px',height:isMobile? 'calc(100vh - 300px)':'calc(100vh - 235px)', overflowY:'auto' }}>
             <Summary/>
           </Box>
         </TabPanel>
