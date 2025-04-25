@@ -53,6 +53,83 @@ const initialClinicians: Clinician[] = [
     phone: '+1 234 567 8901',
     designation: 'Pediatric Cardiologist',
   },
+  {
+    id: '3',
+    name: 'Dr. Sarah Johnson',
+    email: 'sarah.johnson@example.com',
+    phone: '+1 234 567 8901',
+    designation: 'Pediatric Cardiologist',
+  },
+  {
+    id: '4',
+    name: 'Dr. Sarah Johnson',
+    email: 'sarah.johnson@example.com',
+    phone: '+1 234 567 8901',
+    designation: 'Pediatric Cardiologist',
+  },
+  {
+    id: '5',
+    name: 'Dr. Sarah Johnson',
+    email: 'sarah.johnson@example.com',
+    phone: '+1 234 567 8901',
+    designation: 'Pediatric Cardiologist',
+  },
+  {
+    id: '6',
+    name: 'Dr. Sarah Johnson',
+    email: 'sarah.johnson@example.com',
+    phone: '+1 234 567 8901',
+    designation: 'Pediatric Cardiologist',
+  },
+  {
+    id: '7',
+    name: 'Dr. Sarah Johnson',
+    email: 'sarah.johnson@example.com',
+    phone: '+1 234 567 8901',
+    designation: 'Pediatric Cardiologist',
+  },
+  {
+    id: '8',
+    name: 'Dr. Sarah Johnson',
+    email: 'sarah.johnson@example.com',
+    phone: '+1 234 567 8901',
+    designation: 'Pediatric Cardiologist',
+  },
+  {
+    id: '9',
+    name: 'Dr. Sarah Johnson',
+    email: 'sarah.johnson@example.com',
+    phone: '+1 234 567 8901',
+    designation: 'Pediatric Cardiologist',
+  },
+  {
+    id: '10',
+    name: 'Dr. Sarah Johnson',
+    email: 'sarah.johnson@example.com',
+    phone: '+1 234 567 8901',
+    designation: 'Pediatric Cardiologist',
+  },
+  {
+    id: '11',
+    name: 'Dr. Sarah Johnson',
+    email: 'sarah.johnson@example.com',
+    phone: '+1 234 567 8901',
+    designation: 'Pediatric Cardiologist',
+  },
+  {
+    id: '12',
+    name: 'Dr. Sarah Johnson',
+    email: 'sarah.johnson@example.com',
+    phone: '+1 234 567 8901',
+    designation: 'Pediatric Cardiologist',
+  },
+  {
+    id: '13',
+    name: 'Dr. Sarah Johnson',
+    email: 'sarah.johnson@example.com',
+    phone: '+1 234 567 8901',
+    designation: 'Pediatric Cardiologist',
+  },
 ];
 
 function stringToColor(string: string) {
@@ -75,7 +152,7 @@ function getInitials(name: string) {
     : names[0].substring(0, 2);
 }
 
-const ROWS_PER_PAGE = 5;
+const ROWS_PER_PAGE = 10;
 
 export default function Clinicians() {
   const theme = useTheme();
@@ -228,19 +305,21 @@ export default function Clinicians() {
         </Box>
       </Box>
 
+
       <TableContainer
         component={Paper}
         sx={{
           boxShadow: 'none',
           border: '0px solid #e0e0e0',
           minHeight: filteredClinicians.length === 0 ? 400 : 'auto',
+          maxHeight: isMobile? 'calc(100vh - 350px)' :'calc(100vh - 200px)',
         }}
       >
         {filteredClinicians.length === 0 ? (
           <EmptyState />
         ) : (
           <>
-            <Table sx={{ minWidth: isMobile ? 'auto' : 650 }}>
+            <Table sx={{ minWidth: isMobile ? 'auto' : 650, }} stickyHeader>
               <TableHead>
                 <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
                   <TableCell>Profile</TableCell>
@@ -261,7 +340,7 @@ export default function Clinicians() {
                     <TableRow
                       key={clinician.id}
                       sx={{
-                        '&:last-child td, &:last-child th': { border: 0 },
+                        '&:last-child td, &:last-child th': { borderBottom: '1px solid #e0e0e0' },
                         cursor: 'pointer',
                         '&:hover': {
                           backgroundColor: 'rgba(0, 0, 0, 0.04)',
@@ -308,7 +387,7 @@ export default function Clinicians() {
         )}
       </TableContainer>
 
-      <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+      <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
         <DialogTitle>Add New Clinician</DialogTitle>
         <DialogContent>
           <Box sx={{ pt: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -356,11 +435,36 @@ export default function Clinicians() {
                 </label>
               </Box>
             </Box>
+            <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)', lg: 'repeat(3, 1fr)' },
+            gap: 2,
+          }}
+        >
             <TextField
-              label="Name"
+              label="First Name"
               fullWidth
               value={newClinician.name}
               onChange={handleInputChange('name')}
+            />
+            <TextField
+              label="Last Name"
+              fullWidth
+              value={newClinician.name}
+              onChange={handleInputChange('lastname')}
+            />
+            <TextField
+              label="Gender"
+              fullWidth
+              value={newClinician.name}
+              onChange={handleInputChange('gender')}
+            />
+            <TextField
+              label="DOB"
+              fullWidth
+              value={newClinician.name}
+              onChange={handleInputChange('dob')}
             />
             <TextField
               label="Email"
@@ -376,11 +480,12 @@ export default function Clinicians() {
               onChange={handleInputChange('phone')}
             />
             <TextField
-              label="Designation"
+              label="Fee"
               fullWidth
               value={newClinician.designation}
-              onChange={handleInputChange('designation')}
+              onChange={handleInputChange('fee')}
             />
+            </Box>
           </Box>
         </DialogContent>
         <DialogActions
