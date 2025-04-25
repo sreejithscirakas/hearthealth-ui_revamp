@@ -488,19 +488,36 @@ export default function Clinicians() {
             </Box>
           </Box>
         </DialogContent>
+
         <DialogActions
           sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginBottom: '20px',
+            p: 1,
+            display: "flex",
+            flexWrap:'wrap',
+            justifyContent:'center',
+            alignItems: "center",
           }}
         >
-          <Button onClick={handleSave} variant="contained">
-            Save
-          </Button>
-          <Button onClick={handleClose} variant="outlined">
+            <Button
+              color="primary"
+              size="large"
+              variant="contained"
+              sx={{ borderRadius: "25px" }}
+            >
+              Submit
+            </Button>
+          <Button
+            onClick={handleClose}
+            color="primary"
+            size="large"
+            variant="outlined"
+            sx={{ borderRadius: "25px" }}
+          >
             Cancel
           </Button>
+            <Typography color="error" sx={{width:'100%', textAlign:'center'}}>
+              All mandatory fields marked * must be filled
+            </Typography>
         </DialogActions>
       </Dialog>
     </Box>

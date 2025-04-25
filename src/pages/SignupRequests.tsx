@@ -129,7 +129,7 @@ const initialRequests: SignupRequest[] = [
     name: 'Alice Smith',
     email: 'alice@gmail.com',
     date: '21-03-2025',
-    status: 'Approved',
+    status: 'Pending',
   },
   {
     id: '5',
@@ -143,7 +143,7 @@ const initialRequests: SignupRequest[] = [
     name: 'Carol White',
     email: 'carol@gmail.com',
     date: '19-03-2025',
-    status: 'Rejected',
+    status: 'Pending',
   },
   {
     id: '7',
@@ -161,7 +161,7 @@ const initialRequests: SignupRequest[] = [
   },
 ];
 
-const ROWS_PER_PAGE = 5;
+const ROWS_PER_PAGE = 10;
 
 const attachments = [
   {
@@ -317,7 +317,15 @@ export default function SignupRequests() {
 
   const RequestsTable = ({ requests }: { requests: SignupRequest[] }) => (
     <>
-      <Table sx={{ minWidth: isMobile ? 'auto' : 650 }}>
+    <TableContainer
+        component={Paper}
+        sx={{
+          boxShadow: 'none',
+          border: '0px solid #e0e0e0',
+          maxHeight: isMobile? 'calc(100vh - 350px)' :'calc(100vh - 200px)',
+        }}
+      >
+      <Table sx={{ minWidth: isMobile ? 'auto' : 650 }} stickyHeader>
         <TableHead>
           <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
             <TableCell>Name</TableCell>
@@ -413,89 +421,23 @@ export default function SignupRequests() {
           borderTop: '0px solid #e0e0e0',
         }}
       />
+      </TableContainer>
     </>
   );
 
   return (
     <Box sx={{ padding: '0px 25px', height: 'calc(100vh - 56px)' }}>
       <Box sx={{ mb: 3 }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs
-            value={tabValue}
-            onChange={handleTabChange}
-            sx={{
-              '& .MuiTab-root': {
-                textTransform: 'none',
-                minWidth: 100,
-              },
-              '& .Mui-selected': {
-                color: 'primary.main',
-                fontWeight: 600,
-              },
-            }}
-          >
-            <Tab
-              label={
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <span>Signup Requests</span>
-                  <Typography
-                    component="span"
-                    sx={{
-                      backgroundColor: '#fff7e6',
-                      color: 'warning.main',
-                      px: 1,
-                      py: 0.5,
-                      borderRadius: 1,
-                      fontSize: '0.75rem',
-                    }}
-                  >
-                    {pendingRequests.length}
-                  </Typography>
-                </Box>
-              }
-            />
-            <Tab
-              label={
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <span>Approved</span>
-                  <Typography
-                    component="span"
-                    sx={{
-                      backgroundColor: '#e6f4ea',
-                      color: 'success.main',
-                      px: 1,
-                      py: 0.5,
-                      borderRadius: 1,
-                      fontSize: '0.75rem',
-                    }}
-                  >
-                    {approvedRequests.length}
-                  </Typography>
-                </Box>
-              }
-            />
-            <Tab
-              label={
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <span>Rejected</span>
-                  <Typography
-                    component="span"
-                    sx={{
-                      backgroundColor: '#fce8e8',
-                      color: 'error.main',
-                      px: 1,
-                      py: 0.5,
-                      borderRadius: 1,
-                      fontSize: '0.75rem',
-                    }}
-                  >
-                    {rejectedRequests.length}
-                  </Typography>
-                </Box>
-              }
-            />
-          </Tabs>
-        </Box>
+      <Typography
+          variant="h6"
+          sx={{
+            color: 'primary.main',
+            fontWeight: 600,
+            mb: 3,
+          }}
+        >
+          Patients
+        </Typography>
       </Box>
 
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
@@ -607,7 +549,7 @@ export default function SignupRequests() {
               alignItems: 'center',
             }}
           >
-            <Typography variant="h6" color="text.primary">Signup Request Details</Typography>
+            <Typography variant="h6" color="text.primary">Patient Details</Typography>
           </Box>
 
           <Box sx={{ p: 2, flexGrow: 1, overflowY: 'auto', height:'calc(100vh - 136px )'}}>
@@ -826,31 +768,7 @@ export default function SignupRequests() {
             </Stack>
           </Box>
 
-          {selectedRequest?.status === 'Pending' && (
-            <Box
-              sx={{
-                p: 2,
-                borderTop: '1px solid #eee',
-                display: 'flex',
-                justifyContent:'center',
-                gap: 2,
-                backgroundColor: 'background.paper',
-              }}
-            >
-              <Button
-                variant="contained"
-                sx={{backgroundColor:'primary.main',color:'#fff'}}
-              >
-                Accept
-              </Button>
-              <Button
-                variant="outlined"
-                sx={{color:'primary.main'}}
-              >
-                Reject
-              </Button>
-            </Box>
-          )}
+          
         </Box>
       </SwipeableDrawer>
     </Box>

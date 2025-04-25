@@ -58,7 +58,7 @@ interface SidemenuProps {
 
 const menuItems = [
   { text: 'Calendar', mobileText: 'Calendar', icon: <CalendarTodayIcon /> },
-  { text: 'Signup Requests', mobileText: 'Requests', icon: <ContactPageIcon /> },
+  { text: 'Patients', mobileText: 'Patients', icon: <ContactPageIcon /> },
   { text: 'Clinicians', mobileText: 'Clinicians', icon: <GroupIcon /> },
   { text: 'Billing', mobileText: 'Billing', icon: <PaymentIcon /> },
   { text: 'Profile', mobileText: 'Profile', icon: <AccountCircleIcon /> },
